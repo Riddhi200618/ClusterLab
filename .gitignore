@@ -1,0 +1,19 @@
+
+# Environment secrets
+.env
+.env.*
+!.env.example
+
+# Python cache
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Frontend dependencies and build output
+node_modules/
+dist/
+
+# OS files
+.DS_Store
