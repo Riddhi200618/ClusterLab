@@ -1,5 +1,6 @@
 import React from 'react';
 import { useExperiment } from '../../context/ExperimentContext';
+import { PixelBadge } from '../common/PixelBadge';
 import {
   Play,
   Pause,
@@ -7,8 +8,7 @@ import {
   SkipForward,
   ChevronLeft,
   ChevronRight,
-  Gauge,
-  RotateCcw
+  Gauge
 } from 'lucide-react';
 
 export const StepperControls = () => {
@@ -60,40 +60,40 @@ export const StepperControls = () => {
   };
 
   return (
-    <div className="w-full rounded-2xl glass-panel p-4 shadow-xl border border-indigo-500/20">
+    <div className="w-full border border-[#20133A] bg-[#0E091C] p-3 sm:p-4 shadow-sm">
       {/* Step Info Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 mb-3 border-b border-gray-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 mb-2.5 border-b border-[#1E1136]">
         <div className="flex items-center space-x-2">
-          <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
-            Step {currentStepIndex + 1} of {totalSteps}
-          </span>
-          <span className="font-semibold text-gray-200 text-sm">
+          <PixelBadge variant="cyan">
+            FRAME {currentStepIndex + 1} / {totalSteps}
+          </PixelBadge>
+          <span className="font-['Silkscreen'] text-xs font-bold text-white tracking-wide truncate">
             {currentStepData.phase_name || `Phase: ${currentStepData.phase}`}
           </span>
         </div>
 
         {/* Phase Type Badge */}
-        <div className="flex items-center space-x-2 text-xs">
+        <div className="flex items-center space-x-2 text-xs font-mono">
           {currentStepData.converged && (
-            <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-semibold">
-              Converged
-            </span>
+            <PixelBadge variant="lime">
+              CONVERGED
+            </PixelBadge>
           )}
           {currentStepData.wcss !== undefined && (
             <span className="text-gray-400">
-              WCSS: <strong className="text-cyan-300">{currentStepData.wcss}</strong>
+              WCSS: <strong className="text-[#00F0FF]">{currentStepData.wcss}</strong>
             </span>
           )}
           {currentStepData.log_likelihood !== undefined && (
             <span className="text-gray-400">
-              Log-Likelihood: <strong className="text-emerald-300">{currentStepData.log_likelihood}</strong>
+              LL: <strong className="text-[#39FF14]">{currentStepData.log_likelihood}</strong>
             </span>
           )}
         </div>
       </div>
 
       {/* Scrubber Range Slider */}
-      <div className="mb-4">
+      <div className="mb-3">
         <input
           type="range"
           min="0"
@@ -103,23 +103,23 @@ export const StepperControls = () => {
             setIsPlaying(false);
             setCurrentStepIndex(parseInt(e.target.value, 10));
           }}
-          className="w-full h-2 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-indigo-500 hover:accent-cyan-400 transition-all"
+          className="w-full h-2 bg-[#090514] appearance-none cursor-pointer accent-[#00F0FF]"
         />
         <div className="flex justify-between text-[10px] text-gray-500 font-mono mt-1">
-          <span>Start (Init)</span>
-          <span>Iteration {currentStepData.iteration || 0}</span>
-          <span>Final (Convergence)</span>
+          <span>FRAME 01 (INIT)</span>
+          <span className="text-yellow-400 font-bold">ITERATION {currentStepData.iteration || 0}</span>
+          <span>FRAME {totalSteps} (FINAL)</span>
         </div>
       </div>
 
       {/* Button Controls Toolbar */}
       <div className="flex flex-wrap items-center justify-between gap-3">
         {/* Main Navigation */}
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-1.5 sm:space-x-2">
           <button
             onClick={handleReset}
             disabled={currentStepIndex === 0}
-            className="p-2 rounded-lg bg-gray-800/80 hover:bg-gray-700 text-gray-300 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+            className="p-1.5 sm:p-2 border border-[#20133A] bg-[#120B24] hover:bg-[#1A1033] text-gray-300 disabled:opacity-30 disabled:pointer-events-none shadow-sm transition-all"
             title="Jump to Start"
           >
             <SkipBack className="w-4 h-4" />
@@ -128,7 +128,7 @@ export const StepperControls = () => {
           <button
             onClick={handlePrev}
             disabled={currentStepIndex === 0}
-            className="p-2 rounded-lg bg-gray-800/80 hover:bg-gray-700 text-gray-300 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+            className="p-1.5 sm:p-2 border border-[#20133A] bg-[#120B24] hover:bg-[#1A1033] text-gray-300 disabled:opacity-30 disabled:pointer-events-none shadow-sm transition-all"
             title="Previous Step"
           >
             <ChevronLeft className="w-4 h-4" />
@@ -136,20 +136,20 @@ export const StepperControls = () => {
 
           <button
             onClick={handlePlayPause}
-            className={`flex items-center space-x-2 px-5 py-2 rounded-xl font-bold text-sm text-white shadow-lg transition-all ${
+            className={`flex items-center space-x-1.5 px-4 py-1.5 border font-['Silkscreen'] font-bold text-xs uppercase shadow-sm transition-all ${
               isPlaying
-                ? 'bg-amber-600 hover:bg-amber-500 shadow-amber-600/30'
-                : 'bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 shadow-indigo-600/30'
+                ? 'border-[#FFE600] bg-[#FFE600] text-[#1A1400]'
+                : 'border-[#00F0FF] bg-[#00F0FF] text-[#050510] hover:bg-[#38BDF8]'
             }`}
           >
-            {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-white" />}
-            <span>{isPlaying ? 'Pause' : currentStepIndex >= totalSteps - 1 ? 'Replay' : 'Play Simulation'}</span>
+            {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-current" />}
+            <span>{isPlaying ? 'PAUSE' : currentStepIndex >= totalSteps - 1 ? 'REPLAY' : 'PLAY SIM'}</span>
           </button>
 
           <button
             onClick={handleNext}
             disabled={currentStepIndex >= totalSteps - 1}
-            className="p-2 rounded-lg bg-gray-800/80 hover:bg-gray-700 text-gray-300 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+            className="p-1.5 sm:p-2 border border-[#20133A] bg-[#120B24] hover:bg-[#1A1033] text-gray-300 disabled:opacity-30 disabled:pointer-events-none shadow-sm transition-all"
             title="Next Step"
           >
             <ChevronRight className="w-4 h-4" />
@@ -158,7 +158,7 @@ export const StepperControls = () => {
           <button
             onClick={handleEnd}
             disabled={currentStepIndex >= totalSteps - 1}
-            className="p-2 rounded-lg bg-gray-800/80 hover:bg-gray-700 text-gray-300 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+            className="p-1.5 sm:p-2 border border-[#20133A] bg-[#120B24] hover:bg-[#1A1033] text-gray-300 disabled:opacity-30 disabled:pointer-events-none shadow-sm transition-all"
             title="Jump to End"
           >
             <SkipForward className="w-4 h-4" />
@@ -166,19 +166,19 @@ export const StepperControls = () => {
         </div>
 
         {/* Playback Speed Controls */}
-        <div className="flex items-center space-x-1.5 bg-gray-900/80 border border-gray-800 p-1 rounded-xl">
-          <span className="text-[11px] text-gray-400 px-2 font-medium flex items-center space-x-1">
-            <Gauge className="w-3.5 h-3.5 text-cyan-400" />
-            <span>Speed:</span>
+        <div className="flex items-center space-x-1 border border-[#20133A] bg-[#0A0617] p-0.5">
+          <span className="text-[10px] font-['Silkscreen'] text-gray-400 px-1.5 font-bold flex items-center space-x-1">
+            <Gauge className="w-3 h-3 text-[#00F0FF]" />
+            <span>SPEED:</span>
           </span>
           {[0.5, 1, 2, 4].map((speed) => (
             <button
               key={speed}
               onClick={() => setPlaybackSpeed(speed)}
-              className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all ${
+              className={`px-2 py-0.5 text-[10px] font-mono font-bold transition-all border ${
                 playbackSpeed === speed
-                  ? 'bg-indigo-600 text-white shadow-sm'
-                  : 'text-gray-400 hover:text-gray-200 hover:bg-gray-800'
+                  ? 'border-[#00F0FF] bg-[#00F0FF] text-[#050510]'
+                  : 'border-transparent text-gray-400 hover:text-white hover:bg-[#140E29]'
               }`}
             >
               {speed}x

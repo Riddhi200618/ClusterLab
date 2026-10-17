@@ -53,16 +53,42 @@ class DatabaseClient:
         self._init_client()
 
     def _init_client(self):
-        if (
-            self.supabase_url
-            and self.supabase_key
-            and "supabase.co" in self.supabase_url
-            and settings.APP_ENV != "testing"
-        ):
+        if settings.APP_ENV == "testing":
+            logger.info("APP_ENV is 'testing'. Running in isolated local test mode with Supabase disabled.")
+            self.use_supabase = False
+            return
+
+        has_url = bool(self.supabase_url and self.supabase_url.strip())
+        has_key = bool(self.supabase_key and self.supabase_key.strip())
+
+        if has_url and has_key:
+            if "supabase.co" not in self.supabase_url and "localhost" not in self.supabase_url and "127.0.0.1" not in self.supabase_url:
+                logger.warning(
+                    f"Supabase URL format warning: '{self.supabase_url}' does not contain 'supabase.co' or local host. "
+                    "Verify this points to a valid PostgREST endpoint."
+                )
             self.use_supabase = True
             logger.info("Supabase PostgreSQL REST connection configured and active.")
+        elif has_url and not has_key:
+            error_msg = (
+                "Supabase configuration error: SUPABASE_URL is defined, but SUPABASE_KEY / "
+                "SUPABASE_SERVICE_ROLE_KEY is missing. Supabase persistence cannot function without an API key."
+            )
+            logger.error(error_msg)
+            if settings.APP_ENV == "production":
+                raise ValueError(error_msg)
+            self.use_supabase = False
+        elif has_key and not has_url:
+            error_msg = (
+                "Supabase configuration error: SUPABASE_KEY is defined, but SUPABASE_URL is missing. "
+                "Supabase persistence cannot function without a target endpoint URL."
+            )
+            logger.error(error_msg)
+            if settings.APP_ENV == "production":
+                raise ValueError(error_msg)
+            self.use_supabase = False
         else:
-            logger.info("Supabase credentials not set, incomplete, or in testing mode. Running in local fallback mode.")
+            logger.info("Supabase credentials not configured. Running in local in-memory fallback mode.")
             self.use_supabase = False
 
     def _get_headers(self) -> Dict[str, str]:

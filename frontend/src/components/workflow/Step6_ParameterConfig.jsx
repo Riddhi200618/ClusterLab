@@ -1,6 +1,8 @@
 import React from 'react';
 import { useExperiment } from '../../context/ExperimentContext';
-import { Settings2, Play, ArrowLeft, ArrowRight, AlertTriangle, Info, Sparkles } from 'lucide-react';
+import { PixelBadge } from '../common/PixelBadge';
+import { PixelButton } from '../common/PixelButton';
+import { Settings2, Play, ArrowLeft } from 'lucide-react';
 
 export const Step6_ParameterConfig = () => {
   const {
@@ -23,37 +25,48 @@ export const Step6_ParameterConfig = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto py-6 space-y-6">
+    <div className="max-w-4xl mx-auto py-4 space-y-6">
       {/* Header Banner */}
-      <div className="p-6 rounded-2xl glass-panel border border-indigo-500/20 bg-gradient-to-r from-indigo-950/40 via-purple-950/30 to-cyan-950/40">
-        <div className="flex items-center space-x-3 mb-2">
-          <div className="w-10 h-10 rounded-xl bg-cyan-600/30 border border-cyan-500/40 flex items-center justify-center text-cyan-300">
-            <Settings2 className="w-5 h-5" />
+      <div className="p-4 sm:p-5 border border-[#231542] bg-[#0E091C] shadow-sm">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div className="flex items-center space-x-3">
+            <div className="w-9 h-9 border border-[#00F0FF]/40 bg-[#0B1226] flex items-center justify-center text-cyan-300 shadow-sm">
+              <Settings2 className="w-5 h-5 text-[#00F0FF]" />
+            </div>
+            <div>
+              <div className="flex items-center space-x-2">
+                <span className="font-['Press_Start_2P'] text-[10px] text-[#00F0FF]">STAGE 3</span>
+                <h1 className="font-['Silkscreen'] text-base sm:text-lg font-bold text-white uppercase tracking-wider">
+                  Parameter Configuration
+                </h1>
+              </div>
+              <p className="text-xs text-gray-300 mt-0.5 font-sans">
+                Configure hyperparameters and convergence tolerances for <strong className="text-[#00F0FF] uppercase">{selectedAlgorithm}</strong>.
+              </p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-xl font-bold text-white tracking-tight">Step 6: Hyperparameter Configuration</h1>
-            <p className="text-xs text-gray-300">
-              Tune algorithm parameters for <strong className="text-cyan-300 uppercase">{selectedAlgorithm}</strong> before launching the interactive simulation.
-            </p>
-          </div>
+
+          <PixelBadge variant="cyan">
+            HYPERPARAMETERS
+          </PixelBadge>
         </div>
       </div>
 
       {/* Algorithm-Specific Parameter Tuning Panel */}
-      <div className="glass-panel p-6 rounded-2xl border border-gray-800 space-y-6">
+      <div className="border border-[#20133A] bg-[#0E091C] p-5 sm:p-6 shadow-sm space-y-6">
         {/* K-MEANS PARAMETERS */}
         {selectedAlgorithm === 'kmeans' && (
           <div className="space-y-6">
             {/* Cluster Count K */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <label className="text-sm font-bold text-white flex items-center space-x-2">
-                  <span>Number of Clusters (K):</span>
-                  <span className="font-mono text-cyan-400 bg-cyan-950/50 px-2.5 py-0.5 rounded border border-cyan-500/30 text-base">
+                <label className="text-xs font-['Silkscreen'] font-bold text-white flex items-center space-x-2">
+                  <span>TARGET CLUSTER COUNT (K):</span>
+                  <span className="font-mono text-xs text-[#00F0FF] bg-[#0C152B] px-2 py-0.5 border border-[#00F0FF]/40 font-bold">
                     {kmeansParams.k}
                   </span>
                 </label>
-                <span className="text-xs text-gray-400">Target cluster prototypes</span>
+                <span className="text-[11px] text-gray-400 font-mono">1 to 8 Prototypes</span>
               </div>
               <input
                 type="range"
@@ -62,9 +75,9 @@ export const Step6_ParameterConfig = () => {
                 step="1"
                 value={kmeansParams.k}
                 onChange={(e) => setKmeansParams({ ...kmeansParams, k: parseInt(e.target.value, 10) })}
-                className="w-full accent-indigo-500 h-2 bg-gray-800 rounded-lg cursor-pointer"
+                className="w-full accent-[#00F0FF] h-2 bg-[#090514] cursor-pointer"
               />
-              <div className="flex justify-between text-[11px] text-gray-500 font-mono">
+              <div className="flex justify-between text-[10px] text-gray-500 font-mono">
                 <span>K=1</span>
                 <span>K=4</span>
                 <span>K=8</span>
@@ -73,20 +86,20 @@ export const Step6_ParameterConfig = () => {
 
             {/* Initialization Method */}
             <div className="space-y-2">
-              <label className="text-xs font-bold text-gray-300 uppercase tracking-wider block">
+              <label className="text-xs font-['Silkscreen'] font-bold text-gray-300 uppercase tracking-wider block">
                 Centroid Initialization Strategy:
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {[
                   {
                     id: 'k-means++',
-                    name: 'K-Means++ (Probabilistic Distance)',
-                    desc: 'Spreads initial centroids far apart, leading to faster and more reliable convergence.',
+                    name: 'K-Means++ (Distance Distribution)',
+                    desc: 'Spreads initial centroids far apart, ensuring faster and more stable convergence.',
                   },
                   {
                     id: 'random',
                     name: 'Random Uniform Sampling',
-                    desc: 'Picks K random points from the dataset as initial centroids (can get stuck in local minima).',
+                    desc: 'Picks K random points from the dataset as initial centroids (local minima risk).',
                   },
                 ].map((init) => {
                   const isChecked = kmeansParams.init_method === init.id;
@@ -94,14 +107,14 @@ export const Step6_ParameterConfig = () => {
                     <div
                       key={init.id}
                       onClick={() => setKmeansParams({ ...kmeansParams, init_method: init.id })}
-                      className={`p-3.5 rounded-xl cursor-pointer transition-all border ${
+                      className={`p-3 border cursor-pointer transition-all ${
                         isChecked
-                          ? 'bg-indigo-950/50 border-indigo-500/80 ring-1 ring-indigo-500/30 text-white'
-                          : 'bg-gray-900/40 border-gray-800 text-gray-400 hover:border-gray-700'
+                          ? 'border-[#00F0FF] bg-[#0C152B] text-white shadow-sm'
+                          : 'border-[#20133A] bg-[#0A0617] text-gray-400 hover:border-[#3A2269]'
                       }`}
                     >
-                      <div className="text-xs font-bold">{init.name}</div>
-                      <p className="text-[11px] text-gray-400 mt-1">{init.desc}</p>
+                      <div className="font-['Silkscreen'] text-xs font-bold text-white">{init.name}</div>
+                      <p className="text-[11px] text-gray-400 mt-1 font-sans">{init.desc}</p>
                     </div>
                   );
                 })}
@@ -110,9 +123,9 @@ export const Step6_ParameterConfig = () => {
 
             {/* Max Iterations */}
             <div className="space-y-2">
-              <div className="flex justify-between text-xs text-gray-300 font-semibold">
-                <span>Maximum Allowed Iterations:</span>
-                <span className="font-mono text-indigo-400">{kmeansParams.max_iter}</span>
+              <div className="flex justify-between text-xs font-mono text-gray-300 font-semibold">
+                <span>MAX ALLOWED ITERATIONS:</span>
+                <span className="text-[#00F0FF] font-bold">{kmeansParams.max_iter}</span>
               </div>
               <input
                 type="range"
@@ -121,7 +134,7 @@ export const Step6_ParameterConfig = () => {
                 step="5"
                 value={kmeansParams.max_iter}
                 onChange={(e) => setKmeansParams({ ...kmeansParams, max_iter: parseInt(e.target.value, 10) })}
-                className="w-full accent-indigo-500 h-2 bg-gray-800 rounded-lg cursor-pointer"
+                className="w-full accent-[#00F0FF] h-2 bg-[#090514] cursor-pointer"
               />
             </div>
           </div>
@@ -133,9 +146,9 @@ export const Step6_ParameterConfig = () => {
             {/* Number of Components */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <label className="text-sm font-bold text-white flex items-center space-x-2">
-                  <span>Number of Gaussian Components (K):</span>
-                  <span className="font-mono text-emerald-400 bg-emerald-950/50 px-2.5 py-0.5 rounded border border-emerald-500/30 text-base">
+                <label className="text-xs font-['Silkscreen'] font-bold text-white flex items-center space-x-2">
+                  <span>GAUSSIAN COMPONENTS (K):</span>
+                  <span className="font-mono text-xs text-[#39FF14] bg-[#08150D] px-2 py-0.5 border border-[#39FF14]/40 font-bold">
                     {emParams.n_components}
                   </span>
                 </label>
@@ -147,18 +160,18 @@ export const Step6_ParameterConfig = () => {
                 step="1"
                 value={emParams.n_components}
                 onChange={(e) => setEmParams({ ...emParams, n_components: parseInt(e.target.value, 10) })}
-                className="w-full accent-emerald-500 h-2 bg-gray-800 rounded-lg cursor-pointer"
+                className="w-full accent-[#39FF14] h-2 bg-[#090514] cursor-pointer"
               />
             </div>
 
             {/* Covariance Type */}
             <div className="space-y-2">
-              <label className="text-xs font-bold text-gray-300 uppercase tracking-wider block">
-                Covariance Matrix Constraint:
+              <label className="text-xs font-['Silkscreen'] font-bold text-gray-300 uppercase tracking-wider block">
+                Covariance Matrix Structure:
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 {[
-                  { id: 'full', name: 'Full Covariance', desc: 'Each component has its own general symmetric covariance matrix (arbitrary orientation).' },
+                  { id: 'full', name: 'Full Covariance', desc: 'Each component has an independent general covariance matrix with arbitrary rotation.' },
                   { id: 'diag', name: 'Diagonal Covariance', desc: 'Axis-aligned ellipsoidal clusters without rotation correlation.' },
                   { id: 'spherical', name: 'Spherical Covariance', desc: 'Single variance per component (spherical clusters like K-Means).' },
                 ].map((cov) => {
@@ -167,14 +180,14 @@ export const Step6_ParameterConfig = () => {
                     <div
                       key={cov.id}
                       onClick={() => setEmParams({ ...emParams, covariance_type: cov.id })}
-                      className={`p-3 rounded-xl cursor-pointer transition-all border ${
+                      className={`p-3 border cursor-pointer transition-all ${
                         isChecked
-                          ? 'bg-emerald-950/50 border-emerald-500/80 ring-1 ring-emerald-500/30 text-white'
-                          : 'bg-gray-900/40 border-gray-800 text-gray-400 hover:border-gray-700'
+                          ? 'border-[#39FF14] bg-[#08150D] text-white shadow-sm'
+                          : 'border-[#20133A] bg-[#0A0617] text-gray-400 hover:border-[#3A2269]'
                       }`}
                     >
-                      <div className="text-xs font-bold">{cov.name}</div>
-                      <p className="text-[10px] text-gray-400 mt-1">{cov.desc}</p>
+                      <div className="font-['Silkscreen'] text-xs font-bold text-white">{cov.name}</div>
+                      <p className="text-[10px] text-gray-400 mt-1 font-sans">{cov.desc}</p>
                     </div>
                   );
                 })}
@@ -189,13 +202,13 @@ export const Step6_ParameterConfig = () => {
             {/* Epsilon */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <label className="text-sm font-bold text-white flex items-center space-x-2">
-                  <span>Epsilon Neighborhood Radius (ε):</span>
-                  <span className="font-mono text-amber-400 bg-amber-950/50 px-2.5 py-0.5 rounded border border-amber-500/30 text-base">
+                <label className="text-xs font-['Silkscreen'] font-bold text-white flex items-center space-x-2">
+                  <span>EPSILON RADIUS (ε):</span>
+                  <span className="font-mono text-xs text-[#FF2E93] bg-[#160819] px-2 py-0.5 border border-[#FF2E93]/40 font-bold">
                     {dbscanParams.eps.toFixed(2)}
                   </span>
                 </label>
-                <span className="text-xs text-gray-400">Search ball radius</span>
+                <span className="text-[11px] text-gray-400 font-mono">Neighborhood Radius</span>
               </div>
               <input
                 type="range"
@@ -204,9 +217,9 @@ export const Step6_ParameterConfig = () => {
                 step="0.02"
                 value={dbscanParams.eps}
                 onChange={(e) => setDbscanParams({ ...dbscanParams, eps: parseFloat(e.target.value) })}
-                className="w-full accent-amber-500 h-2 bg-gray-800 rounded-lg cursor-pointer"
+                className="w-full accent-[#FF2E93] h-2 bg-[#090514] cursor-pointer"
               />
-              <div className="flex justify-between text-[11px] text-gray-500 font-mono">
+              <div className="flex justify-between text-[10px] text-gray-500 font-mono">
                 <span>0.05 (Tight)</span>
                 <span>0.50 (Moderate)</span>
                 <span>1.50 (Loose)</span>
@@ -216,13 +229,13 @@ export const Step6_ParameterConfig = () => {
             {/* MinPts */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <label className="text-sm font-bold text-white flex items-center space-x-2">
-                  <span>Minimum Samples Threshold (MinPts):</span>
-                  <span className="font-mono text-amber-400 bg-amber-950/50 px-2.5 py-0.5 rounded border border-amber-500/30 text-base">
+                <label className="text-xs font-['Silkscreen'] font-bold text-white flex items-center space-x-2">
+                  <span>MIN SAMPLES THRESHOLD (MINPTS):</span>
+                  <span className="font-mono text-xs text-[#FF2E93] bg-[#160819] px-2 py-0.5 border border-[#FF2E93]/40 font-bold">
                     {dbscanParams.min_samples}
                   </span>
                 </label>
-                <span className="text-xs text-gray-400">Core point threshold</span>
+                <span className="text-[11px] text-gray-400 font-mono">Core Point Threshold</span>
               </div>
               <input
                 type="range"
@@ -231,7 +244,7 @@ export const Step6_ParameterConfig = () => {
                 step="1"
                 value={dbscanParams.min_samples}
                 onChange={(e) => setDbscanParams({ ...dbscanParams, min_samples: parseInt(e.target.value, 10) })}
-                className="w-full accent-amber-500 h-2 bg-gray-800 rounded-lg cursor-pointer"
+                className="w-full accent-[#FF2E93] h-2 bg-[#090514] cursor-pointer"
               />
             </div>
           </div>
@@ -239,24 +252,25 @@ export const Step6_ParameterConfig = () => {
       </div>
 
       {/* Navigation & Launch */}
-      <div className="flex justify-between pt-4">
-        <button
+      <div className="flex items-center justify-between pt-4 border-t border-[#1E1136]">
+        <PixelButton
+          variant="dark"
+          size="md"
           onClick={prevStep}
-          className="flex items-center space-x-2 px-5 py-2 rounded-xl text-xs font-medium text-gray-300 bg-gray-800/80 hover:bg-gray-700 border border-gray-700 transition-all"
+          icon={<ArrowLeft className="w-4 h-4" />}
         >
-          <ArrowLeft className="w-4 h-4" />
-          <span>Back to Algorithm</span>
-        </button>
+          PREV [ALGORITHM]
+        </PixelButton>
 
-        <button
+        <PixelButton
+          variant="cyan"
+          size="md"
           onClick={handleLaunch}
           disabled={isRunningAlgorithm}
-          className="flex items-center space-x-2 px-8 py-3 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-cyan-500 via-indigo-600 to-purple-600 hover:from-cyan-400 hover:to-purple-500 shadow-xl shadow-cyan-500/25 transition-all"
+          icon={<Play className="w-4 h-4 fill-current" />}
         >
-          <Play className="w-4 h-4 fill-white" />
-          <span>{isRunningAlgorithm ? 'Computing Simulation...' : 'Launch Simulation Playback'}</span>
-          <ArrowRight className="w-4 h-4" />
-        </button>
+          {isRunningAlgorithm ? 'COMPUTING SIMULATION...' : 'EXECUTE SIMULATION ▶'}
+        </PixelButton>
       </div>
     </div>
   );

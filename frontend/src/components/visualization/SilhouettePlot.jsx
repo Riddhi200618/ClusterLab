@@ -1,28 +1,26 @@
 import React, { useMemo } from 'react';
 import Plot from 'react-plotly.js';
+import { PixelBadge } from '../common/PixelBadge';
 
 const CLUSTER_COLORS = [
-  '#6366F1', // Indigo
-  '#10B981', // Emerald
-  '#F59E0B', // Amber
-  '#EC4899', // Pink
-  '#8B5CF6', // Purple
-  '#06B6D4', // Cyan
+  '#00F0FF', // Electric Cyan
+  '#FF2E93', // Neon Magenta
+  '#39FF14', // Arcade Lime
+  '#FFE600', // Warm Yellow
+  '#9D00FF', // Arcade Violet
+  '#FF7A00', // Arcade Orange
 ];
 
 export const SilhouettePlot = ({ silhouetteData, height = 400 }) => {
-  if (!silhouetteData || !silhouetteData.samples || silhouetteData.samples.length === 0) {
-    return (
-      <div className="glass-panel p-8 text-center text-gray-400 rounded-xl">
-        <p>No silhouette data available. Run an algorithm with at least 2 clusters to compute Silhouette Scores.</p>
-      </div>
-    );
-  }
-
-  const { overall_score, per_cluster_scores, cluster_sizes, samples, verdict, explanation } = silhouetteData;
+  const hasData = Boolean(silhouetteData && silhouetteData.samples && silhouetteData.samples.length > 0);
+  const overall_score = silhouetteData?.overall_score ?? null;
+  const verdict = silhouetteData?.verdict || '';
+  const explanation = silhouetteData?.explanation || '';
 
   const plotTraces = useMemo(() => {
-    // Group samples by cluster_id
+    if (!silhouetteData || !silhouetteData.samples || silhouetteData.samples.length === 0) return [];
+    const samples = silhouetteData.samples;
+    const per_cluster_scores = silhouetteData.per_cluster_scores || {};
     const clusterMap = {};
     samples.forEach((s) => {
       if (!clusterMap[s.cluster_id]) clusterMap[s.cluster_id] = [];
@@ -34,7 +32,7 @@ export const SilhouettePlot = ({ silhouetteData, height = 400 }) => {
     const gap = 15;
 
     Object.keys(clusterMap)
-      .sort((a, b) => parseInt(a) - parseInt(b))
+      .sort((a, b) => parseInt(a, 10) - parseInt(b, 10))
       .forEach((cIdStr) => {
         const cId = parseInt(cIdStr, 10);
         const values = clusterMap[cId].sort((a, b) => a - b);
@@ -51,7 +49,7 @@ export const SilhouettePlot = ({ silhouetteData, height = 400 }) => {
           orientation: 'h',
           x: values,
           y: yCoords,
-          name: `Cluster ${cId + 1} (Mean: ${per_cluster_scores[cIdStr] || 0})`,
+          name: `Cluster ${cId + 1} (Avg: ${per_cluster_scores[cIdStr] || 0})`,
           marker: {
             color,
             width: 1,
@@ -63,19 +61,19 @@ export const SilhouettePlot = ({ silhouetteData, height = 400 }) => {
       });
 
     return traces;
-  }, [samples, per_cluster_scores]);
+  }, [silhouetteData]);
 
   const layout = useMemo(() => {
     return {
       title: {
-        text: `Silhouette Analysis (Overall Score: ${overall_score !== null ? overall_score.toFixed(3) : 'N/A'})`,
-        font: { color: '#F3F4F6', size: 14 },
+        text: `Silhouette Profiles (Global Mean: ${overall_score !== null ? overall_score.toFixed(3) : 'N/A'})`,
+        font: { color: '#F3F4F6', size: 13, family: 'Silkscreen, monospace' },
       },
       autosize: true,
       height,
       margin: { l: 60, r: 25, t: 40, b: 45 },
       paper_bgcolor: 'rgba(0,0,0,0)',
-      plot_bgcolor: 'rgba(15, 23, 42, 0.5)',
+      plot_bgcolor: '#07040E',
       showlegend: true,
       legend: {
         orientation: 'h',
@@ -83,17 +81,17 @@ export const SilhouettePlot = ({ silhouetteData, height = 400 }) => {
         y: 1.02,
         xanchor: 'right',
         x: 1,
-        font: { color: '#9CA3AF', size: 10 },
+        font: { color: '#A09BAE', size: 10, family: 'Inter, sans-serif' },
       },
       xaxis: {
-        title: { text: 'Silhouette Coefficient s(i)', font: { color: '#9CA3AF', size: 11 } },
+        title: { text: 'Silhouette Coefficient s(i)', font: { color: '#A09BAE', size: 11, family: 'Inter, sans-serif' } },
         range: [-0.2, 1.0],
-        gridcolor: 'rgba(255, 255, 255, 0.05)',
-        zerolinecolor: 'rgba(255, 255, 255, 0.2)',
-        tickfont: { color: '#9CA3AF', size: 10 },
+        gridcolor: '#1B1133',
+        zerolinecolor: '#FF2E93',
+        tickfont: { color: '#8F89A0', size: 10 },
       },
       yaxis: {
-        title: { text: 'Samples grouped by cluster', font: { color: '#9CA3AF', size: 11 } },
+        title: { text: 'Samples grouped by cluster', font: { color: '#A09BAE', size: 11, family: 'Inter, sans-serif' } },
         showticklabels: false,
         gridcolor: 'transparent',
       },
@@ -108,8 +106,8 @@ export const SilhouettePlot = ({ silhouetteData, height = 400 }) => {
                 y1: 1,
                 yref: 'paper',
                 line: {
-                  color: '#EF4444',
-                  width: 2,
+                  color: '#FFE600',
+                  width: 2.5,
                   dash: 'dash',
                 },
               },
@@ -118,32 +116,18 @@ export const SilhouettePlot = ({ silhouetteData, height = 400 }) => {
     };
   }, [overall_score, height]);
 
-  return (
-    <div className="w-full flex flex-col space-y-4">
-      {/* Visual Verdict Banner */}
-      <div className="flex flex-wrap items-center justify-between p-4 rounded-xl glass-panel border-l-4 border-l-cyan-500 bg-cyan-950/20">
-        <div>
-          <div className="flex items-center space-x-2">
-            <span className="text-xs uppercase font-bold tracking-wider text-cyan-400">Clustering Verdict</span>
-            <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
-              {verdict}
-            </span>
-          </div>
-          <p className="text-xs text-gray-300 mt-1">{explanation}</p>
-        </div>
-
-        <div className="flex items-center space-x-4 mt-2 sm:mt-0">
-          <div className="text-right">
-            <div className="text-xs text-gray-400">Mean Silhouette Score</div>
-            <div className="text-2xl font-black text-cyan-400 font-mono">
-              {overall_score !== null ? overall_score.toFixed(3) : 'N/A'}
-            </div>
-          </div>
-        </div>
+  if (!hasData) {
+    return (
+      <div className="border border-[#231542] bg-[#0E091C] p-8 text-center text-gray-400 font-mono shadow-sm">
+        <p className="text-[#00F0FF] text-sm">EVALUATION METRICS PENDING CALCULATION...</p>
       </div>
+    );
+  }
 
-      {/* Plotly Silhouette Canvas */}
-      <div className="w-full rounded-xl overflow-hidden glass-panel p-2">
+  return (
+    <div className="space-y-4">
+      {/* Plot Canvas */}
+      <div className="border border-[#231542] bg-[#090514] p-3 shadow-sm">
         <Plot
           data={plotTraces}
           layout={layout}
@@ -153,15 +137,21 @@ export const SilhouettePlot = ({ silhouetteData, height = 400 }) => {
         />
       </div>
 
-      {/* Per-Cluster Score Badges */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        {Object.entries(per_cluster_scores).map(([cId, score]) => (
-          <div key={cId} className="p-3 rounded-xl glass-panel border border-gray-800 text-center">
-            <div className="text-[11px] text-gray-400 font-medium">Cluster {parseInt(cId) + 1}</div>
-            <div className="text-base font-bold text-gray-100 font-mono mt-0.5">{score.toFixed(3)}</div>
-            <div className="text-[10px] text-gray-500">{cluster_sizes[cId]} samples</div>
+      {/* Retro Verdict & Explanation Banner */}
+      <div className="border border-[#00F0FF]/30 bg-[#0A1020] p-4 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div>
+          <div className="flex items-center space-x-2">
+            <span className="font-mono text-xs font-semibold text-[#00F0FF]">
+              EVALUATION VERDICT:
+            </span>
+            <PixelBadge variant="cyan">{verdict || 'ANALYSIS COMPLETE'}</PixelBadge>
           </div>
-        ))}
+          {explanation && (
+            <p className="text-xs text-gray-300 mt-1.5 font-sans leading-relaxed">
+              {explanation}
+            </p>
+          )}
+        </div>
       </div>
     </div>
   );

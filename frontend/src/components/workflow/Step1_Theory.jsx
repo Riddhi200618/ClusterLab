@@ -1,33 +1,50 @@
 import React, { useState } from 'react';
 import { useExperiment } from '../../context/ExperimentContext';
-import { MathBlock } from '../common/MathBlock';
-import { BookOpen, Cpu, Sparkles, ArrowRight, Layers, Target, Activity } from 'lucide-react';
+import { MathBlock, InlineMath } from '../common/MathBlock';
+import { PixelBadge } from '../common/PixelBadge';
+import { PixelButton } from '../common/PixelButton';
+import { PixelCard } from '../common/PixelCard';
+import { PixelTarget, PixelFlask, PixelJoystick } from '../common/PixelIcons';
+import { BookOpen, ArrowRight } from 'lucide-react';
 
 export const Step1_Theory = () => {
   const { nextStep } = useExperiment();
   const [activeTab, setActiveTab] = useState('kmeans');
 
   return (
-    <div className="max-w-5xl mx-auto py-6 space-y-6">
+    <div className="max-w-5xl mx-auto py-4 space-y-6">
       {/* Header Banner */}
-      <div className="p-6 rounded-2xl glass-panel border border-indigo-500/20 bg-gradient-to-r from-indigo-950/40 via-purple-950/30 to-cyan-950/40">
-        <div className="flex items-center space-x-3 mb-2">
-          <div className="w-10 h-10 rounded-xl bg-indigo-600/30 border border-indigo-500/40 flex items-center justify-center text-indigo-300">
-            <BookOpen className="w-5 h-5" />
+      <div className="p-4 sm:p-5 border border-[#231542] bg-[#0E091C] shadow-sm">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div className="flex items-center space-x-3">
+            <div className="w-9 h-9 border border-[#00F0FF]/40 bg-[#0B1226] flex items-center justify-center text-cyan-300 shadow-sm">
+              <BookOpen className="w-5 h-5 text-[#00F0FF]" />
+            </div>
+            <div>
+              <div className="flex items-center space-x-2">
+                <span className="font-['Press_Start_2P'] text-[10px] text-[#00F0FF]">STAGE 1</span>
+                <h1 className="font-['Silkscreen'] text-base sm:text-lg font-bold text-white uppercase tracking-wider">
+                  Clustering Theory & Foundations
+                </h1>
+              </div>
+              <p className="text-xs text-gray-300 mt-0.5 font-sans">
+                Foundational mathematical mechanics, objective functions, and algorithmic updates for K-Means, EM/GMM, and DBSCAN.
+              </p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-xl font-bold text-white tracking-tight">Step 1: Introduction & Theoretical Foundations</h1>
-            <p className="text-xs text-gray-300">Master the mathematical mechanics and geometric intuitions behind unsupervised clustering.</p>
-          </div>
+
+          <PixelBadge variant="purple">
+            THEORY GUIDE
+          </PixelBadge>
         </div>
       </div>
 
       {/* Algorithm Theory Tabs */}
-      <div className="flex border-b border-gray-800 space-x-2">
+      <div className="flex flex-wrap gap-2 border-b border-[#1E1136] pb-2">
         {[
-          { id: 'kmeans', name: '1. K-Means (Centroid)', icon: Target },
-          { id: 'em', name: '2. Expectation Maximization (Probabilistic)', icon: Activity },
-          { id: 'dbscan', name: '3. DBSCAN (Density-Based)', icon: Layers },
+          { id: 'kmeans', name: '1. K-Means (Centroid)', icon: PixelTarget, color: 'cyan' },
+          { id: 'em', name: '2. EM / GMM (Probabilistic)', icon: PixelFlask, color: 'lime' },
+          { id: 'dbscan', name: '3. DBSCAN (Density-Based)', icon: PixelJoystick, color: 'pink' },
         ].map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -35,13 +52,13 @@ export const Step1_Theory = () => {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center space-x-2 px-4 py-2.5 rounded-t-xl text-xs font-bold transition-all border-b-2 ${
+              className={`flex items-center space-x-2 px-3 py-1.5 text-xs font-['Silkscreen'] uppercase font-bold border transition-all ${
                 isActive
-                  ? 'bg-gray-800/80 text-cyan-400 border-cyan-400'
-                  : 'text-gray-400 hover:text-gray-200 hover:bg-gray-900/50 border-transparent'
+                  ? 'bg-[#0B1426] border-[#00F0FF] text-white shadow-sm'
+                  : 'bg-[#0E091C] border-[#20133A] text-gray-400 hover:text-white hover:border-[#3A2269] shadow-sm'
               }`}
             >
-              <Icon className="w-4 h-4" />
+              <Icon className="w-4 h-4 flex-shrink-0" />
               <span>{tab.name}</span>
             </button>
           );
@@ -52,30 +69,30 @@ export const Step1_Theory = () => {
       {activeTab === 'kmeans' && (
         <div className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="glass-panel p-5 rounded-xl space-y-3 border border-gray-800">
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider flex items-center space-x-2">
-                <span className="w-2 h-2 rounded-full bg-cyan-400"></span>
-                <span>Core Intuition & Objective</span>
-              </h3>
-              <p className="text-xs text-gray-300 leading-relaxed">
-                K-Means partitions $N$ observations into $K$ non-overlapping spherical clusters. Each point belongs to the cluster with the nearest mean (centroid), serving as a prototype of the cluster.
+            <PixelCard
+              variant="cyan"
+              title="Core Intuition & Objective"
+              badge={<PixelBadge variant="cyan">CENTROID</PixelBadge>}
+            >
+              <p className="text-xs text-gray-300 leading-relaxed font-sans">
+                K-Means partitions <InlineMath math="N" /> observations into <InlineMath math="K" /> non-overlapping spherical clusters. Each point belongs to the cluster with the nearest mean (centroid), serving as a prototype of the cluster.
               </p>
-              <p className="text-xs text-gray-400 leading-relaxed">
+              <p className="text-xs text-gray-400 leading-relaxed font-sans mt-2">
                 The algorithm minimizes the Within-Cluster Sum of Squares (WCSS), also known as inertia or total squared error.
               </p>
-            </div>
+            </PixelCard>
 
-            <div className="glass-panel p-5 rounded-xl space-y-3 border border-gray-800">
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider flex items-center space-x-2">
-                <span className="w-2 h-2 rounded-full bg-indigo-400"></span>
-                <span>The 2-Phase Lloyd's Iteration</span>
-              </h3>
-              <ul className="text-xs text-gray-300 space-y-2 list-disc list-inside">
-                <li><strong className="text-gray-100">Assignment Step:</strong> Assign each data point $x_i$ to its nearest centroid $\mu_k$.</li>
-                <li><strong className="text-gray-100">Update Step:</strong> Recompute each centroid $\mu_k$ as the arithmetic mean of all points assigned to cluster $k$.</li>
-                <li><strong className="text-gray-100">Convergence:</strong> Stops when centroid movements fall below tolerance $\varepsilon$ or max iterations are reached.</li>
+            <PixelCard
+              variant="purple"
+              title="Lloyd's 2-Phase Iteration"
+              badge={<PixelBadge variant="purple">CONVERGENCE</PixelBadge>}
+            >
+              <ul className="text-xs text-gray-300 space-y-2 list-disc list-inside font-sans">
+                <li><strong className="text-gray-100">Assignment Step:</strong> Assign each data point <InlineMath math="x_i" /> to its nearest centroid <InlineMath math="\mu_k" />.</li>
+                <li><strong className="text-gray-100">Update Step:</strong> Recompute each centroid <InlineMath math="\mu_k" /> as the arithmetic mean of all points assigned to cluster <InlineMath math="k" />.</li>
+                <li><strong className="text-gray-100">Convergence:</strong> Stops when centroid movements fall below tolerance <InlineMath math="\varepsilon" /> or max iterations are reached.</li>
               </ul>
-            </div>
+            </PixelCard>
           </div>
 
           <MathBlock
@@ -90,30 +107,30 @@ export const Step1_Theory = () => {
       {activeTab === 'em' && (
         <div className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="glass-panel p-5 rounded-xl space-y-3 border border-gray-800">
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider flex items-center space-x-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
-                <span>Soft Clustering via Gaussian Mixtures</span>
-              </h3>
-              <p className="text-xs text-gray-300 leading-relaxed">
-                Unlike hard assignments in K-Means, Expectation Maximization (EM) computes the posterior probability (responsibility $\gamma_{ik}$) that sample $i$ was generated by Gaussian component $k$.
+            <PixelCard
+              variant="lime"
+              title="Soft Mixture Modeling"
+              badge={<PixelBadge variant="lime">PROBABILITY</PixelBadge>}
+            >
+              <p className="text-xs text-gray-300 leading-relaxed font-sans">
+                Unlike hard assignments in K-Means, Expectation Maximization (EM) computes the posterior probability (responsibility <InlineMath math="\gamma_{ik}" />) that sample <InlineMath math="i" /> was generated by Gaussian component <InlineMath math="k" />.
               </p>
-              <p className="text-xs text-gray-400 leading-relaxed">
-                Each component is defined by its mean vector $\mu_k$, covariance matrix $\Sigma_k$ (modeling cluster orientation and elongation), and mixture weight prior $\pi_k$.
+              <p className="text-xs text-gray-400 leading-relaxed font-sans mt-2">
+                Each component is defined by its mean vector <InlineMath math="\mu_k" />, covariance matrix <InlineMath math="\Sigma_k" /> (modeling cluster orientation and elongation), and mixture weight prior <InlineMath math="\pi_k" />.
               </p>
-            </div>
+            </PixelCard>
 
-            <div className="glass-panel p-5 rounded-xl space-y-3 border border-gray-800">
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider flex items-center space-x-2">
-                <span className="w-2 h-2 rounded-full bg-teal-400"></span>
-                <span>E-Step & M-Step Optimization</span>
-              </h3>
-              <ul className="text-xs text-gray-300 space-y-2 list-disc list-inside">
-                <li><strong className="text-gray-100">E-Step (Expectation):</strong> Calculate responsibilities $\gamma_{ik}$ using Bayes' Rule and the multivariate normal PDF.</li>
-                <li><strong className="text-gray-100">M-Step (Maximization):</strong> Update weights $\pi_k$, means $\mu_k$, and covariance matrices $\Sigma_k$ using the weighted sample moments.</li>
+            <PixelCard
+              variant="purple"
+              title="E-Step & M-Step Optimization"
+              badge={<PixelBadge variant="purple">MLE</PixelBadge>}
+            >
+              <ul className="text-xs text-gray-300 space-y-2 list-disc list-inside font-sans">
+                <li><strong className="text-gray-100">E-Step (Expectation):</strong> Calculate responsibilities <InlineMath math="\gamma_{ik}" /> using Bayes' Rule and the multivariate normal PDF.</li>
+                <li><strong className="text-gray-100">M-Step (Maximization):</strong> Update weights <InlineMath math="\pi_k" />, means <InlineMath math="\mu_k" />, and covariance matrices <InlineMath math="\Sigma_k" /> using the weighted sample moments.</li>
                 <li><strong className="text-gray-100">Convergence:</strong> Guaranteed to monotonically increase the total mixture log-likelihood.</li>
               </ul>
-            </div>
+            </PixelCard>
           </div>
 
           <MathBlock
@@ -128,49 +145,50 @@ export const Step1_Theory = () => {
       {activeTab === 'dbscan' && (
         <div className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="glass-panel p-5 rounded-xl space-y-3 border border-gray-800">
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider flex items-center space-x-2">
-                <span className="w-2 h-2 rounded-full bg-amber-400"></span>
-                <span>Density-Based Reachability</span>
-              </h3>
-              <p className="text-xs text-gray-300 leading-relaxed">
+            <PixelCard
+              variant="pink"
+              title="Density-Based Reachability"
+              badge={<PixelBadge variant="pink">SPATIAL</PixelBadge>}
+            >
+              <p className="text-xs text-gray-300 leading-relaxed font-sans">
                 DBSCAN (Density-Based Spatial Clustering of Applications with Noise) groups points based on local spatial density. It discovers clusters of arbitrary shapes and isolates low-density outliers as noise.
               </p>
-              <p className="text-xs text-gray-400 leading-relaxed">
-                Two key hyperparameters dictate the clustering behavior: $\varepsilon$ (Epsilon neighborhood radius) and $\text{MinPts}$ (minimum density threshold).
+              <p className="text-xs text-gray-400 leading-relaxed font-sans mt-2">
+                Two key hyperparameters dictate the clustering behavior: <InlineMath math="\varepsilon" /> (Epsilon neighborhood radius) and <InlineMath math="\text{MinPts}" /> (minimum density threshold).
               </p>
-            </div>
+            </PixelCard>
 
-            <div className="glass-panel p-5 rounded-xl space-y-3 border border-gray-800">
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider flex items-center space-x-2">
-                <span className="w-2 h-2 rounded-full bg-orange-400"></span>
-                <span>Point Classification Categories</span>
-              </h3>
-              <ul className="text-xs text-gray-300 space-y-2 list-disc list-inside">
-                <li><strong className="text-emerald-300">Core Point:</strong> Has at least $\text{MinPts}$ neighbors within radius $\varepsilon$ ($|N_\varepsilon(p)| \ge \text{MinPts}$).</li>
-                <li><strong className="text-cyan-300">Border Point:</strong> Has fewer than $\text{MinPts}$ neighbors, but is density-reachable from a Core Point.</li>
-                <li><strong className="text-rose-400">Noise Point:</strong> Neither a Core nor Border point; isolated outlier.</li>
+            <PixelCard
+              variant="purple"
+              title="Point Classification Categories"
+              badge={<PixelBadge variant="purple">TRINARY</PixelBadge>}
+            >
+              <ul className="text-xs text-gray-300 space-y-2 list-disc list-inside font-sans">
+                <li><strong className="text-emerald-400">Core Point:</strong> Has at least <InlineMath math="\text{MinPts}" /> neighbors within radius <InlineMath math="\varepsilon" /> (<InlineMath math="|N_\varepsilon(p)| \ge \text{MinPts}" />).</li>
+                <li><strong className="text-[#00F0FF]">Border Point:</strong> Has fewer than <InlineMath math="\text{MinPts}" /> neighbors, but is density-reachable from a Core Point.</li>
+                <li><strong className="text-[#FF2E93]">Noise Point:</strong> Neither a Core nor Border point; isolated outlier.</li>
               </ul>
-            </div>
+            </PixelCard>
           </div>
 
           <MathBlock
             title="DBSCAN Density Reachability Condition"
             formula="N_\varepsilon(p) = \{q \in D \mid \text{dist}(p, q) \le \varepsilon\}, \quad p \in \text{Core} \iff |N_\varepsilon(p)| \ge \text{MinPts}"
-            description="Clusters are formed as maximal sets of density-connected points. DBSCAN does not require pre-specifying the number of clusters K."
+            description="Clusters are formed as maximal sets of density-connected points. DBSCAN does not require pre-specifying the number of clusters $K$."
           />
         </div>
       )}
 
       {/* Navigation Footer */}
-      <div className="flex justify-end pt-4">
-        <button
+      <div className="flex justify-end pt-4 border-t border-[#1E1136]">
+        <PixelButton
+          variant="cyan"
+          size="md"
           onClick={nextStep}
-          className="flex items-center space-x-2 px-6 py-2.5 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 shadow-lg shadow-indigo-600/30 transition-all"
+          icon={<ArrowRight className="w-4 h-4" />}
         >
-          <span>Proceed to Dataset Selection</span>
-          <ArrowRight className="w-4 h-4" />
-        </button>
+          NEXT: PREPARE DATA [STAGE 2]
+        </PixelButton>
       </div>
     </div>
   );

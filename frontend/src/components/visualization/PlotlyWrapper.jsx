@@ -2,14 +2,14 @@ import React, { useMemo } from 'react';
 import Plot from 'react-plotly.js';
 
 const CLUSTER_COLORS = [
-  '#6366F1', // Indigo
-  '#10B981', // Emerald
-  '#F59E0B', // Amber
-  '#EC4899', // Pink
-  '#8B5CF6', // Purple
-  '#06B6D4', // Cyan
-  '#EF4444', // Red
-  '#14B8A6', // Teal
+  '#00F0FF', // Electric Cyan
+  '#FF2E93', // Neon Magenta
+  '#39FF14', // Arcade Lime
+  '#FFE600', // Warm Yellow
+  '#9D00FF', // Arcade Violet
+  '#FF7A00', // Arcade Orange
+  '#00FFB2', // Electric Mint
+  '#FF3366', // Electric Coral
 ];
 
 export const PlotlyWrapper = ({
@@ -19,7 +19,7 @@ export const PlotlyWrapper = ({
   previousCentroids = [],
   ellipses = [],
   activePoint = null,
-  activeRadius = null,
+  _activeRadius = null,
   featureNames = ['Feature 1', 'Feature 2'],
   title = '',
   height = 500,
@@ -51,7 +51,7 @@ export const PlotlyWrapper = ({
       const y = indices.map((i) => points[i][1]);
       const z = is3D ? indices.map((i) => points[i][2]) : undefined;
 
-      const color = isNoise ? '#6B7280' : CLUSTER_COLORS[Math.abs(lbl) % CLUSTER_COLORS.length];
+      const color = isNoise ? '#6B687D' : CLUSTER_COLORS[Math.abs(lbl) % CLUSTER_COLORS.length];
       const name = isNoise ? 'Noise / Outlier' : `Cluster ${lbl + 1}`;
 
       traces.push({
@@ -63,12 +63,12 @@ export const PlotlyWrapper = ({
         name,
         marker: {
           color,
-          size: isNoise ? 6 : 8,
+          size: isNoise ? 7 : 8,
           symbol: isNoise ? 'x' : 'circle',
-          opacity: isNoise ? 0.6 : 0.85,
+          opacity: isNoise ? 0.65 : 0.9,
           line: {
-            color: isNoise ? '#374151' : '#FFFFFF',
-            width: isNoise ? 1 : 1,
+            color: isNoise ? '#2A263B' : '#FFFFFF',
+            width: isNoise ? 1.5 : 1,
           },
         },
         hoverinfo: 'text',
@@ -87,10 +87,10 @@ export const PlotlyWrapper = ({
         mode: 'markers',
         name: 'Inspecting Point',
         marker: {
-          color: '#F43F5E',
+          color: '#FFE600',
           size: 14,
           symbol: 'cross',
-          line: { color: '#FFFFFF', width: 2 },
+          line: { color: '#000000', width: 2 },
         },
         hoverinfo: 'name',
       });
@@ -115,7 +115,7 @@ export const PlotlyWrapper = ({
           symbol: 'diamond',
           line: {
             color: '#000000',
-            width: 2,
+            width: 2.5,
           },
         },
         hoverinfo: 'text',
@@ -131,10 +131,10 @@ export const PlotlyWrapper = ({
             type: 'scatter',
             mode: 'lines',
             showlegend: k === 0,
-            name: 'Centroid Shift Path',
+            name: 'Centroid Trajectory',
             line: {
-              color: '#F59E0B',
-              width: 2,
+              color: '#FFE600',
+              width: 2.5,
               dash: 'dot',
             },
             hoverinfo: 'none',
@@ -194,12 +194,12 @@ export const PlotlyWrapper = ({
     const is3D = show3D && points[0] && points[0].length >= 3;
 
     return {
-      title: title ? { text: title, font: { color: '#F3F4F6', size: 14 } } : undefined,
+      title: title ? { text: title, font: { color: '#F3F4F6', size: 13, family: 'Silkscreen, monospace' } } : undefined,
       autosize: true,
       height,
       margin: { l: 45, r: 25, t: title ? 35 : 20, b: 45 },
       paper_bgcolor: 'rgba(0,0,0,0)',
-      plot_bgcolor: 'rgba(15, 23, 42, 0.5)',
+      plot_bgcolor: '#07040E',
       showlegend: true,
       legend: {
         orientation: 'h',
@@ -207,27 +207,27 @@ export const PlotlyWrapper = ({
         y: 1.02,
         xanchor: 'right',
         x: 1,
-        font: { color: '#9CA3AF', size: 10 },
+        font: { color: '#B3ABBF', size: 10, family: 'Inter, sans-serif' },
       },
       xaxis: {
-        title: { text: featureNames[0] || 'Feature 1', font: { color: '#9CA3AF', size: 11 } },
-        gridcolor: 'rgba(255, 255, 255, 0.05)',
-        zerolinecolor: 'rgba(255, 255, 255, 0.1)',
-        tickfont: { color: '#9CA3AF', size: 10 },
+        title: { text: featureNames[0] || 'Feature 1', font: { color: '#A09BAE', size: 11, family: 'Inter, sans-serif' } },
+        gridcolor: '#1B1133',
+        zerolinecolor: '#2D1B54',
+        tickfont: { color: '#8F89A0', size: 10 },
       },
       yaxis: {
-        title: { text: featureNames[1] || 'Feature 2', font: { color: '#9CA3AF', size: 11 } },
-        gridcolor: 'rgba(255, 255, 255, 0.05)',
-        zerolinecolor: 'rgba(255, 255, 255, 0.1)',
-        tickfont: { color: '#9CA3AF', size: 10 },
+        title: { text: featureNames[1] || 'Feature 2', font: { color: '#A09BAE', size: 11, family: 'Inter, sans-serif' } },
+        gridcolor: '#1B1133',
+        zerolinecolor: '#2D1B54',
+        tickfont: { color: '#8F89A0', size: 10 },
       },
       ...(is3D
         ? {
             scene: {
-              xaxis: { title: featureNames[0], gridcolor: '#374151', color: '#9CA3AF' },
-              yaxis: { title: featureNames[1], gridcolor: '#374151', color: '#9CA3AF' },
-              zaxis: { title: featureNames[2] || 'Feature 3', gridcolor: '#374151', color: '#9CA3AF' },
-              bgcolor: 'rgba(15, 23, 42, 0.5)',
+              xaxis: { title: featureNames[0], gridcolor: '#261545', color: '#A09BAE' },
+              yaxis: { title: featureNames[1], gridcolor: '#261545', color: '#A09BAE' },
+              zaxis: { title: featureNames[2] || 'Feature 3', gridcolor: '#261545', color: '#A09BAE' },
+              bgcolor: '#07040E',
             },
           }
         : {}),
@@ -235,7 +235,7 @@ export const PlotlyWrapper = ({
   }, [title, height, featureNames, show3D, points]);
 
   return (
-    <div className="w-full h-full rounded-xl overflow-hidden glass-panel p-2">
+    <div className="w-full h-full border border-[#231542] bg-[#090514] p-2 shadow-sm">
       <Plot
         data={plotData}
         layout={layout}

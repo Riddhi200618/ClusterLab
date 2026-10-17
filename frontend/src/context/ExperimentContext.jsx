@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 import api from '../services/api';
 
 const ExperimentContext = createContext(null);
@@ -69,6 +69,49 @@ export const ExperimentProvider = ({ children }) => {
 
   const playbackTimerRef = useRef(null);
 
+  // Fetch Dataset Details
+  const loadDatasetDetails = async (slug, customParams = null) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const details = await api.getDatasetDetails(slug, customParams);
+      setDatasetDetails(details);
+      setSelectedDatasetSlug(slug);
+      setSelectedFeatures(details.default_features || details.feature_names.slice(0, 2));
+      setActiveExperiment(null);
+      setSimulationResult(null);
+      setSilhouetteDetails(null);
+      setComparisonResult(null);
+    } catch (err) {
+      console.error(`Error loading dataset ${slug}:`, err);
+      setError(`Failed to load dataset details: ${err.message}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Generate Synthetic Dataset
+  const generateSynthetic = async (params) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const details = await api.generateSyntheticDataset(params);
+      setDatasetDetails(details);
+      setSelectedDatasetSlug(details.slug);
+      setSyntheticParams(params);
+      setSelectedFeatures(details.feature_names.slice(0, 2));
+      setActiveExperiment(null);
+      setSimulationResult(null);
+      setSilhouetteDetails(null);
+      setComparisonResult(null);
+    } catch (err) {
+      console.error('Error generating synthetic dataset:', err);
+      setError(`Failed to generate synthetic dataset: ${err.message}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Load Initial Datasets List
   useEffect(() => {
     const fetchDatasets = async () => {
@@ -88,41 +131,6 @@ export const ExperimentProvider = ({ children }) => {
     };
     fetchDatasets();
   }, []);
-
-  // Fetch Dataset Details
-  const loadDatasetDetails = async (slug, customParams = null) => {
-    try {
-      setLoading(true);
-      setError(null);
-      const details = await api.getDatasetDetails(slug, customParams);
-      setDatasetDetails(details);
-      setSelectedDatasetSlug(slug);
-      setSelectedFeatures(details.default_features || details.feature_names.slice(0, 2));
-    } catch (err) {
-      console.error(`Error loading dataset ${slug}:`, err);
-      setError(`Failed to load dataset details: ${err.message}`);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Generate Synthetic Dataset
-  const generateSynthetic = async (params) => {
-    try {
-      setLoading(true);
-      setError(null);
-      const details = await api.generateSyntheticDataset(params);
-      setDatasetDetails(details);
-      setSelectedDatasetSlug(details.slug);
-      setSyntheticParams(params);
-      setSelectedFeatures(details.feature_names.slice(0, 2));
-    } catch (err) {
-      console.error('Error generating synthetic dataset:', err);
-      setError(`Failed to generate synthetic dataset: ${err.message}`);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   // Create Experiment Session
   const initExperiment = async () => {

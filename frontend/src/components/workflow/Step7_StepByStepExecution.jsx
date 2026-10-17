@@ -4,14 +4,18 @@ import { PlotlyWrapper } from '../visualization/PlotlyWrapper';
 import { StepperControls } from '../visualization/StepperControls';
 import { ConvergencePlot } from '../visualization/ConvergencePlot';
 import { MathBlock } from '../common/MathBlock';
-import { Play, ArrowRight, ArrowLeft, Cpu, Activity, Info, BarChart3 } from 'lucide-react';
+import { PixelBadge } from '../common/PixelBadge';
+import { PixelButton } from '../common/PixelButton';
+import { Play, ArrowRight, ArrowLeft, Info, ChevronDown } from 'lucide-react';
 
 export const Step7_StepByStepExecution = () => {
   const {
     activeExperiment,
-    selectedAlgorithm,
     simulationResult,
     currentStepIndex,
+    selectedAlgorithm,
+    executeAlgorithm,
+    isRunningAlgorithm,
     nextStep,
     prevStep,
   } = useExperiment();
@@ -26,14 +30,28 @@ export const Step7_StepByStepExecution = () => {
 
   if (!simulationResult || !currentStepData) {
     return (
-      <div className="glass-panel p-8 text-center text-gray-400 rounded-xl max-w-4xl mx-auto my-12">
-        <p>Simulation data is currently loading or was not executed yet.</p>
-        <button
-          onClick={prevStep}
-          className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-lg text-xs font-bold"
-        >
-          Go Back to Parameters
-        </button>
+      <div className="border border-[#231542] bg-[#0E091C] shadow-sm p-8 text-center text-gray-400 max-w-4xl mx-auto my-12 font-mono space-y-4">
+        <p className="text-[#00F0FF] text-sm font-semibold">SIMULATION DATA PENDING EXECUTION...</p>
+        <p className="text-xs font-sans text-gray-400 max-w-md mx-auto">
+          Execute the {selectedAlgorithm.toUpperCase()} algorithm on the loaded dataset to generate step snapshots and centroid trajectories.
+        </p>
+        <div className="flex items-center justify-center space-x-3 pt-2">
+          <PixelButton
+            variant="dark"
+            size="md"
+            onClick={prevStep}
+          >
+            PREV [PARAMETERS]
+          </PixelButton>
+          <PixelButton
+            variant="cyan"
+            size="md"
+            onClick={executeAlgorithm}
+            disabled={isRunningAlgorithm}
+          >
+            {isRunningAlgorithm ? 'EXECUTING...' : 'RUN SIMULATION NOW [START]'}
+          </PixelButton>
+        </div>
       </div>
     );
   }
@@ -46,152 +64,148 @@ export const Step7_StepByStepExecution = () => {
   const activePoint = currentStepData.current_point_coord || null;
 
   return (
-    <div className="max-w-6xl mx-auto py-6 space-y-6">
+    <div className="max-w-6xl mx-auto py-4 space-y-6">
       {/* Header Banner */}
-      <div className="p-5 rounded-2xl glass-panel border border-indigo-500/20 bg-gradient-to-r from-indigo-950/40 via-purple-950/30 to-cyan-950/40 flex items-center justify-between">
-        <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 rounded-xl bg-cyan-600/30 border border-cyan-500/40 flex items-center justify-center text-cyan-300">
-            <Play className="w-5 h-5 fill-cyan-400" />
+      <div className="p-4 sm:p-5 border border-[#231542] bg-[#0E091C] shadow-sm">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div className="flex items-center space-x-3">
+            <div className="w-9 h-9 border border-[#00F0FF]/40 bg-[#0B1226] flex items-center justify-center text-cyan-300 shadow-sm">
+              <Play className="w-5 h-5 fill-[#00F0FF]" />
+            </div>
+            <div>
+              <div className="flex items-center space-x-2">
+                <span className="font-['Press_Start_2P'] text-[10px] text-[#00F0FF]">STAGE 3</span>
+                <h1 className="font-['Silkscreen'] text-base sm:text-lg font-bold text-white uppercase tracking-wider">
+                  Step-by-Step Simulation
+                </h1>
+              </div>
+              <p className="text-xs text-gray-300 mt-0.5 font-sans">
+                Interactive step-by-step playback of centroid migration, cluster reassignments, and convergence dynamics.
+              </p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-xl font-bold text-white tracking-tight">
-              Step 7: Step-by-Step Algorithm Simulation
-            </h1>
-            <p className="text-xs text-gray-300">
-              Scrub, play, and observe internal algorithm operations, centroid adjustments, and cluster assignments.
-            </p>
-          </div>
+
+          <PixelBadge variant="cyan">
+            {selectedAlgorithm.toUpperCase()}
+          </PixelBadge>
+        </div>
+      </div>
+
+      {/* Playback Scrubber & Navigation Controls */}
+      <StepperControls />
+
+      {/* Convergence Statistics Bar */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono text-xs">
+        <div className="p-3 border border-[#20133A] bg-[#0E091C] shadow-sm">
+          <span className="font-['Silkscreen'] text-[10px] text-gray-400 block">PHASE:</span>
+          <span className="font-bold text-[#00F0FF] text-xs mt-0.5 block truncate">
+            {currentStepData.phase_name || currentStepData.phase}
+          </span>
         </div>
 
-        <div className="hidden sm:flex items-center space-x-2">
-          <span className="text-xs font-mono uppercase bg-gray-800 text-gray-300 px-3 py-1 rounded-full border border-gray-700 font-bold">
-            {selectedAlgorithm}
+        <div className="p-3 border border-[#20133A] bg-[#0E091C] shadow-sm">
+          <span className="font-['Silkscreen'] text-[10px] text-gray-400 block">ITERATION:</span>
+          <span className="font-mono font-bold text-xs text-yellow-300 mt-0.5 block">
+            {currentStepData.iteration || 0} / {simulationResult.total_iterations}
+          </span>
+        </div>
+
+        <div className="p-3 border border-[#20133A] bg-[#0E091C] shadow-sm">
+          <span className="font-['Silkscreen'] text-[10px] text-gray-400 block">
+            {currentStepData.wcss !== undefined ? 'WCSS (INERTIA):' : currentStepData.log_likelihood !== undefined ? 'LOG-LIKELIHOOD:' : 'CLUSTERS:'}
+          </span>
+          <span className="font-bold text-[#39FF14] text-xs mt-0.5 block">
+            {currentStepData.wcss !== undefined
+              ? currentStepData.wcss.toFixed(2)
+              : currentStepData.log_likelihood !== undefined
+              ? currentStepData.log_likelihood.toFixed(2)
+              : simulationResult.metrics?.num_clusters || 0}
+          </span>
+        </div>
+
+        <div className="p-3 border border-[#20133A] bg-[#0E091C] shadow-sm">
+          <span className="font-['Silkscreen'] text-[10px] text-gray-400 block">STATUS:</span>
+          <span className={`font-mono font-bold text-xs mt-0.5 block ${currentStepData.converged ? 'text-[#39FF14]' : 'text-amber-400'}`}>
+            {currentStepData.converged ? 'CONVERGED' : 'ITERATING'}
           </span>
         </div>
       </div>
 
-      {/* Playback Controls Component */}
-      <StepperControls />
-
-      {/* Main Simulation Viewport Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* Left 8 Cols: Interactive Scatter Canvas */}
-        <div className="lg:col-span-8 flex flex-col space-y-4">
-          <div className="h-[460px] w-full">
-            <PlotlyWrapper
-              points={points}
-              labels={labels}
-              centroids={centroids}
-              previousCentroids={previousCentroids}
-              ellipses={ellipses}
-              activePoint={activePoint}
-              featureNames={featureNames}
-              title={`Simulation Frame (Step ${currentStepIndex + 1}): ${currentStepData.phase_name}`}
-              height={450}
-            />
-          </div>
-
-          {/* Convergence Plot under canvas */}
-          {selectedAlgorithm !== 'dbscan' && (
-            <ConvergencePlot
-              steps={simulationResult.steps}
-              algorithmType={selectedAlgorithm}
-              height={200}
-            />
-          )}
+      {/* Primary Clustering Plot Viewport */}
+      <div className="border border-[#20133A] bg-[#080512] p-2.5 sm:p-3 shadow-sm">
+        <div className="h-[490px] w-full">
+          <PlotlyWrapper
+            points={points}
+            labels={labels}
+            centroids={centroids}
+            previousCentroids={previousCentroids}
+            ellipses={ellipses}
+            activePoint={activePoint}
+            featureNames={featureNames}
+            title={`Step ${currentStepIndex + 1}/${simulationResult.steps.length}: ${currentStepData.phase_name || currentStepData.phase}`}
+            height={480}
+          />
         </div>
+      </div>
 
-        {/* Right 4 Cols: Mathematical Inspector & Educational Explanation */}
-        <div className="lg:col-span-4 flex flex-col space-y-4">
-          {/* Phase Explanation Card */}
-          <div className="p-5 rounded-2xl glass-panel border border-cyan-500/30 bg-cyan-950/20 space-y-2">
-            <div className="flex items-center space-x-2 text-cyan-400 text-xs font-bold uppercase tracking-wider">
-              <Info className="w-4 h-4" />
-              <span>Step Mechanics</span>
-            </div>
+      {/* Convergence Curve Plot (WCSS / Log-Likelihood) */}
+      {selectedAlgorithm !== 'dbscan' && (
+        <div className="border border-[#20133A] bg-[#0E091C] p-3 sm:p-4 shadow-sm">
+          <ConvergencePlot
+            steps={simulationResult.steps}
+            algorithmType={selectedAlgorithm}
+            height={190}
+          />
+        </div>
+      )}
+
+      {/* Collapsible Technical Details & Mathematical Formulation */}
+      <details className="border border-[#20133A] bg-[#0E091C] p-3 sm:p-4 shadow-sm cursor-pointer group">
+        <summary className="font-['Silkscreen'] text-xs font-bold text-[#00F0FF] uppercase flex items-center justify-between list-none select-none">
+          <div className="flex items-center space-x-2">
+            <Info className="w-4 h-4 text-[#00F0FF]" />
+            <span>Algorithm Mechanics & Active Mathematical Formulation</span>
+          </div>
+          <ChevronDown className="w-4 h-4 text-gray-400 group-open:rotate-180 transition-transform" />
+        </summary>
+
+        <div className="pt-3 space-y-3 border-t border-[#1E1136] mt-2.5 cursor-default">
+          <div className="p-3 border border-[#1E1136] bg-[#080512] space-y-1">
+            <span className="font-['Silkscreen'] text-[10px] text-gray-400 uppercase">Phase Explanation:</span>
             <p className="text-xs text-gray-200 leading-relaxed font-sans">
               {currentStepData.explanation}
             </p>
           </div>
 
-          {/* Active Mathematical Formula */}
-          <MathBlock
-            title="Active LaTeX Formulation"
-            formula={currentStepData.math_formula}
-            description="Theoretical equation governing this simulation state."
-          />
-
-          {/* Iteration Metrics Inspector */}
-          <div className="p-4 rounded-xl glass-panel border border-gray-800 space-y-3">
-            <div className="flex items-center justify-between text-xs font-bold text-gray-400 uppercase">
-              <span>Simulation State</span>
-              <span className="text-gray-500 font-mono">Iteration {currentStepData.iteration || 0}</span>
-            </div>
-
-            <div className="space-y-2 font-mono text-xs">
-              <div className="flex justify-between py-1 border-b border-gray-800">
-                <span className="text-gray-400">Phase:</span>
-                <span className="text-indigo-300 font-semibold">{currentStepData.phase}</span>
-              </div>
-
-              {currentStepData.wcss !== undefined && (
-                <div className="flex justify-between py-1 border-b border-gray-800">
-                  <span className="text-gray-400">WCSS (Inertia):</span>
-                  <span className="text-cyan-300">{currentStepData.wcss.toFixed(2)}</span>
-                </div>
-              )}
-
-              {currentStepData.delta_wcss !== undefined && currentStepData.delta_wcss !== null && (
-                <div className="flex justify-between py-1 border-b border-gray-800">
-                  <span className="text-gray-400">Δ WCSS:</span>
-                  <span className={currentStepData.delta_wcss <= 0 ? 'text-emerald-400' : 'text-rose-400'}>
-                    {currentStepData.delta_wcss.toFixed(2)}
-                  </span>
-                </div>
-              )}
-
-              {currentStepData.log_likelihood !== undefined && (
-                <div className="flex justify-between py-1 border-b border-gray-800">
-                  <span className="text-gray-400">Log-Likelihood:</span>
-                  <span className="text-emerald-300">{currentStepData.log_likelihood.toFixed(2)}</span>
-                </div>
-              )}
-
-              {currentStepData.delta_log_likelihood !== undefined && currentStepData.delta_log_likelihood !== null && (
-                <div className="flex justify-between py-1 border-b border-gray-800">
-                  <span className="text-gray-400">Δ Log-Likelihood:</span>
-                  <span className="text-emerald-400">+{currentStepData.delta_log_likelihood.toFixed(4)}</span>
-                </div>
-              )}
-
-              <div className="flex justify-between py-1">
-                <span className="text-gray-400">Convergence Flag:</span>
-                <span className={currentStepData.converged ? 'text-emerald-400 font-bold' : 'text-amber-400'}>
-                  {currentStepData.converged ? 'TRUE (Converged)' : 'FALSE (Iterating)'}
-                </span>
-              </div>
-            </div>
-          </div>
+          {currentStepData.math_formula && (
+            <MathBlock
+              title="Active Mathematical Formulation"
+              formula={currentStepData.math_formula}
+              description="Theoretical formulation governing this iteration update."
+            />
+          )}
         </div>
-      </div>
+      </details>
 
       {/* Navigation Footer */}
-      <div className="flex justify-between pt-4">
-        <button
+      <div className="flex items-center justify-between pt-4 border-t border-[#1E1136]">
+        <PixelButton
+          variant="dark"
+          size="md"
           onClick={prevStep}
-          className="flex items-center space-x-2 px-5 py-2 rounded-xl text-xs font-medium text-gray-300 bg-gray-800/80 hover:bg-gray-700 border border-gray-700 transition-all"
+          icon={<ArrowLeft className="w-4 h-4" />}
         >
-          <ArrowLeft className="w-4 h-4" />
-          <span>Back to Parameters</span>
-        </button>
+          PREV [PARAMETERS]
+        </PixelButton>
 
-        <button
+        <PixelButton
+          variant="cyan"
+          size="md"
           onClick={nextStep}
-          className="flex items-center space-x-2 px-6 py-2.5 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 shadow-lg shadow-indigo-600/30 transition-all"
+          icon={<ArrowRight className="w-4 h-4" />}
         >
-          <span>Expanded Visualization View</span>
-          <ArrowRight className="w-4 h-4" />
-        </button>
+          NEXT: ANALYZE RESULTS [STAGE 4]
+        </PixelButton>
       </div>
     </div>
   );

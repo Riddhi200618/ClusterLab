@@ -3,7 +3,7 @@ import Plot from 'react-plotly.js';
 
 export const ConvergencePlot = ({ steps = [], algorithmType = 'kmeans', height = 240 }) => {
   const { xData, yData, title, yTitle, color } = useMemo(() => {
-    if (!steps || steps.length === 0) return { xData: [], yData: [], title: '', yTitle: '', color: '#6366F1' };
+    if (!steps || steps.length === 0) return { xData: [], yData: [], title: '', yTitle: '', color: '#00F0FF' };
 
     const iterSteps = steps.filter((s) => s.iteration !== undefined);
     const iters = [];
@@ -25,14 +25,14 @@ export const ConvergencePlot = ({ steps = [], algorithmType = 'kmeans', height =
       yData: values,
       title: isKMeans ? 'Objective Loss: WCSS Convergence' : 'Optimization: Log-Likelihood Trajectory',
       yTitle: isKMeans ? 'Within-Cluster Sum of Squares' : 'Log-Likelihood ln p(X)',
-      color: isKMeans ? '#06B6D4' : '#10B981',
+      color: isKMeans ? '#00F0FF' : '#39FF14',
     };
   }, [steps, algorithmType]);
 
   if (xData.length === 0) return null;
 
   return (
-    <div className="w-full rounded-xl overflow-hidden glass-panel p-2">
+    <div className="w-full border border-[#231542] bg-[#0B0717] p-2 shadow-sm">
       <Plot
         data={[
           {
@@ -47,21 +47,21 @@ export const ConvergencePlot = ({ steps = [], algorithmType = 'kmeans', height =
           },
         ]}
         layout={{
-          title: { text: title, font: { color: '#F3F4F6', size: 12 } },
+          title: { text: title, font: { color: '#F3F4F6', size: 12, family: 'Silkscreen, monospace' } },
           autosize: true,
           height,
           margin: { l: 50, r: 20, t: 30, b: 35 },
           paper_bgcolor: 'rgba(0,0,0,0)',
-          plot_bgcolor: 'rgba(15, 23, 42, 0.5)',
+          plot_bgcolor: '#07040E',
           xaxis: {
-            title: { text: 'Iteration Index', font: { color: '#9CA3AF', size: 10 } },
-            gridcolor: 'rgba(255, 255, 255, 0.05)',
-            tickfont: { color: '#9CA3AF', size: 9 },
+            title: { text: 'Iteration Index', font: { color: '#A09BAE', size: 10 } },
+            gridcolor: '#1F143B',
+            tickfont: { color: '#A09BAE', size: 9 },
           },
           yaxis: {
-            title: { text: yTitle, font: { color: '#9CA3AF', size: 10 } },
-            gridcolor: 'rgba(255, 255, 255, 0.05)',
-            tickfont: { color: '#9CA3AF', size: 9 },
+            title: { text: yTitle, font: { color: '#A09BAE', size: 10 } },
+            gridcolor: '#1F143B',
+            tickfont: { color: '#A09BAE', size: 9 },
           },
         }}
         config={{ responsive: true, displayModeBar: false }}

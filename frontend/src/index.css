@@ -1,59 +1,404 @@
 @import "tailwindcss";
 
+@theme {
+  --font-pixel: 'Press Start 2P', monospace;
+  --font-arcade: 'Silkscreen', 'Press Start 2P', monospace;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  --color-retro-bg: #07050E;
+  --color-retro-card: #110B22;
+  --color-retro-panel: #160F2E;
+  --color-retro-border: #2D1A54;
+  --color-neon-pink: #FF2E93;
+  --color-neon-cyan: #00F0FF;
+  --color-neon-lime: #39FF14;
+  --color-neon-yellow: #FFE600;
+  --color-neon-purple: #9D00FF;
+  --color-neon-orange: #FF6B00;
+}
+
 @layer base {
   :root {
-    --bg-main: #0B0F19;
-    --card-bg: rgba(17, 24, 39, 0.75);
-    --border-subtle: rgba(255, 255, 255, 0.08);
+    --bg-main: #07050E;
+    --card-bg: #110B22;
+    --border-subtle: #2D1A54;
   }
 
   body {
-    background-color: #0B0F19;
-    color: #F3F4F6;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: #07050E;
+    color: #F1F1F8;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
   }
 }
 
-/* Custom glowing gradients and glassmorphism */
-.glass-panel {
-  background: rgba(17, 24, 39, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+/* Background pixel grid & retro pattern - quiet & restrained */
+.bg-pixel-grid {
+  background-color: #07050E;
+  background-image: 
+    radial-gradient(rgba(157, 0, 255, 0.06) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
-.glass-panel-hover {
-  transition: all 0.2s ease-in-out;
+/* Subtle CRT scanline effect - restrained for laboratory readability */
+.scanlines-overlay {
+  position: relative;
 }
-.glass-panel-hover:hover {
-  border-color: rgba(99, 102, 241, 0.35);
-  box-shadow: 0 8px 32px 0 rgba(79, 70, 229, 0.15);
+.scanlines-overlay::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 28, 0) 50%, rgba(0, 0, 0, 0.05) 50%);
+  background-size: 100% 4px;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+/* Pixel Card / Box Utility Classes - Thin muted borders, no glowing spread */
+.pixel-panel {
+  background: #0E091C;
+  border: 1px solid #261545;
+  box-shadow: 2px 2px 0px #040208;
+  position: relative;
+}
+
+.pixel-panel-cyan {
+  background: #0C1124;
+  border: 1px solid #00F0FF;
+  box-shadow: 2px 2px 0px #00363B;
+}
+
+.pixel-panel-pink {
+  background: #17091E;
+  border: 1px solid #FF2E93;
+  box-shadow: 2px 2px 0px #4D0026;
+}
+
+.pixel-panel-lime {
+  background: #09170E;
+  border: 1px solid #39FF14;
+  box-shadow: 2px 2px 0px #0E3B08;
+}
+
+.pixel-panel-yellow {
+  background: #171407;
+  border: 1px solid #FFE600;
+  box-shadow: 2px 2px 0px #3B3400;
+}
+
+.pixel-panel-purple {
+  background: #110722;
+  border: 1px solid #9D00FF;
+  box-shadow: 2px 2px 0px #2E004D;
+}
+
+/* Arcade Pixel Buttons - Clean 1px borders, subtle flat offset, no neon glow */
+.pixel-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Silkscreen', 'Press Start 2P', monospace;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 0.5rem 1rem;
+  border: 1px solid;
+  transition: all 0.1s ease;
+  user-select: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.pixel-btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 0 0 0 !important;
+}
+
+.pixel-btn-cyan {
+  background: #00F0FF;
+  color: #050510;
+  border-color: #6EE7B7;
+  box-shadow: 1px 1px 0px #005F66;
+}
+.pixel-btn-cyan:hover {
+  background: #38BDF8;
+  color: #030712;
+}
+
+.pixel-btn-pink {
+  background: #FF2E93;
+  color: #FFFFFF;
+  border-color: #FDA4AF;
+  box-shadow: 1px 1px 0px #800040;
+}
+.pixel-btn-pink:hover {
+  background: #F43F5E;
+}
+
+.pixel-btn-lime {
+  background: #39FF14;
+  color: #061504;
+  border-color: #86EFAC;
+  box-shadow: 1px 1px 0px #1A6600;
+}
+.pixel-btn-lime:hover {
+  background: #4ADE80;
+}
+
+.pixel-btn-yellow {
+  background: #FFE600;
+  color: #1A1400;
+  border-color: #FDE047;
+  box-shadow: 1px 1px 0px #807300;
+}
+.pixel-btn-yellow:hover {
+  background: #FACC15;
+}
+
+.pixel-btn-purple {
+  background: #9D00FF;
+  color: #FFFFFF;
+  border-color: #D8B4FE;
+  box-shadow: 1px 1px 0px #47007A;
+}
+.pixel-btn-purple:hover {
+  background: #A855F7;
+}
+
+.pixel-btn-dark {
+  background: #140E29;
+  color: #DDD4FC;
+  border-color: #311E57;
+  box-shadow: 1px 1px 0px #05030A;
+}
+.pixel-btn-dark:hover {
+  background: #1E153D;
+  color: #FFFFFF;
+  border-color: #4C2F85;
+}
+
+/* Pixel Corner Notched Badge */
+.pixel-corners {
+  clip-path: polygon(
+    0 4px, 4px 4px, 4px 0,
+    calc(100% - 4px) 0, calc(100% - 4px) 4px, 100% 4px,
+    100% calc(100% - 4px), calc(100% - 4px) calc(100% - 4px), calc(100% - 4px) 100%,
+    4px 100%, 4px calc(100% - 4px), 0 calc(100% - 4px)
+  );
+}
+
+/* Pixel Stepped Corners Box */
+.pixel-notch {
+  clip-path: polygon(
+    0 6px, 6px 0,
+    calc(100% - 6px) 0, 100% 6px,
+    100% calc(100% - 6px), calc(100% - 6px) 100%,
+    6px 100%, 0 calc(100% - 6px)
+  );
+}
+
+/* Pixel HUD and stat bar - restrained */
+.pixel-hud {
+  background: #090615;
+  border: 1px solid #231542;
+  box-shadow: 1px 1px 0px #040209;
 }
 
 /* Custom scrollbars */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #0B0F19;
+  background: #07050E;
+  border: 1px solid #1D1438;
 }
 ::-webkit-scrollbar-thumb {
-  background: #374151;
-  border-radius: 9999px;
+  background: #39246B;
+  border: 1px solid #5C3CA8;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #4B5563;
+  background: #00F0FF;
+  border: 1px solid #A3FAFF;
 }
 
-/* Animation utilities */
-@keyframes pulseGlow {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50% { opacity: 0.8; transform: scale(1.05); }
+/* Animations */
+@keyframes coinBlink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0.15; }
 }
 
-.animate-pulse-glow {
-  animation: pulseGlow 3s infinite ease-in-out;
+@keyframes pixelFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
 }
+
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0.3; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
+@keyframes scanlinePulse {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(1000%); }
+}
+
+.animate-coin-blink {
+  animation: coinBlink 1s infinite;
+}
+
+.animate-pixel-float {
+  animation: pixelFloat 3s ease-in-out infinite;
+}
+
+.animate-star-twinkle {
+  animation: starTwinkle 2s ease-in-out infinite;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .animate-coin-blink,
+  .animate-pixel-float,
+  .animate-star-twinkle {
+    animation: none !important;
+  }
+}
+
+/* ==========================================================================
+   PRINT / PDF EXPORT OPTIMIZATIONS
+   ========================================================================== */
+@media print {
+  @page {
+    margin: 12mm 15mm;
+    size: A4 portrait;
+  }
+
+  /* Force pure white background and crisp dark text */
+  html, body, #root, main {
+    background: #FFFFFF !important;
+    background-image: none !important;
+    color: #111827 !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 11pt !important;
+    line-height: 1.5 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Hide interactive controls, header, navigation bar, footer, and banners */
+  header,
+  nav,
+  footer,
+  .no-print,
+  button,
+  .pixel-btn,
+  .scanlines-overlay::after,
+  input[type="range"] {
+    display: none !important;
+  }
+
+  /* Reset pixel panels into clean printable report cards */
+  .pixel-panel,
+  .pixel-panel-cyan,
+  .pixel-panel-pink,
+  .pixel-panel-lime,
+  .pixel-panel-yellow,
+  .pixel-panel-purple,
+  .print-card {
+    background: #FFFFFF !important;
+    color: #111827 !important;
+    border: 1px solid #D1D5DB !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    margin-bottom: 1.25rem !important;
+    padding: 1rem !important;
+  }
+
+  /* Ensure text headings are dark and legible */
+  h1, h2, h3, h4, p, span, td, th, div {
+    color: #111827 !important;
+    text-shadow: none !important;
+  }
+
+  .text-gray-300, .text-gray-400, .text-gray-500 {
+    color: #4B5563 !important;
+  }
+
+  .text-cyan-300, .text-cyan-400, [class*="text-[#00F0FF]"] {
+    color: #0369A1 !important;
+    font-weight: 600 !important;
+  }
+
+  .text-emerald-300, .text-emerald-400, [class*="text-[#39FF14]"] {
+    color: #047857 !important;
+    font-weight: 600 !important;
+  }
+
+  .text-purple-300, .text-purple-400, [class*="text-[#9D00FF]"], [class*="text-[#D699FF]"] {
+    color: #6D28D9 !important;
+    font-weight: 600 !important;
+  }
+
+  .text-yellow-300, .text-yellow-400, [class*="text-[#FFE600]"] {
+    color: #B45309 !important;
+    font-weight: 600 !important;
+  }
+
+  .text-rose-300, .text-rose-400, [class*="text-[#FF2E93]"] {
+    color: #BE123C !important;
+    font-weight: 600 !important;
+  }
+
+  /* Tables: high contrast, crisp borders, avoid breaks */
+  table {
+    border-collapse: collapse !important;
+    width: 100% !important;
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  thead {
+    background-color: #F3F4F6 !important;
+    border-bottom: 2px solid #9CA3AF !important;
+    display: table-header-group !important;
+  }
+
+  th {
+    background-color: #F3F4F6 !important;
+    color: #111827 !important;
+    font-weight: 700 !important;
+    padding: 6px 10px !important;
+    border: 1px solid #D1D5DB !important;
+    font-size: 9pt !important;
+  }
+
+  td {
+    color: #1F2937 !important;
+    padding: 6px 10px !important;
+    border: 1px solid #E5E7EB !important;
+    font-size: 9pt !important;
+  }
+
+  tr {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Prevent awkward page break cuts across cards */
+  .break-inside-avoid {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+}
+

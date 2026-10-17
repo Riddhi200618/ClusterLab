@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import { useExperiment } from '../../context/ExperimentContext';
 import { PlotlyWrapper } from '../visualization/PlotlyWrapper';
-import { Eye, ArrowRight, ArrowLeft, Box, Sparkles, PieChart, Layers } from 'lucide-react';
+import { PixelBadge } from '../common/PixelBadge';
+import { PixelButton } from '../common/PixelButton';
+import { Eye, ArrowRight, ArrowLeft, Box } from 'lucide-react';
 
 export const Step8_InteractiveViz = () => {
   const {
     activeExperiment,
     simulationResult,
     selectedAlgorithm,
+    executeAlgorithm,
+    isRunningAlgorithm,
     nextStep,
     prevStep,
   } = useExperiment();
@@ -21,95 +25,140 @@ export const Step8_InteractiveViz = () => {
 
   const can3D = points.length > 0 && points[0].length >= 3;
 
+  if (!simulationResult) {
+    return (
+      <div className="max-w-4xl mx-auto py-8 space-y-6">
+        <div className="p-6 sm:p-8 border border-[#20133A] bg-[#0E091C] shadow-sm text-center space-y-4 font-['Silkscreen']">
+          <p className="text-[#00F0FF] text-sm">
+            MANIFOLD VISUALIZATION PENDING SIMULATION...
+          </p>
+          <p className="text-xs font-sans text-gray-300 max-w-md mx-auto">
+            Execute the {selectedAlgorithm.toUpperCase()} algorithm on the loaded dataset to render the 2D/3D interactive manifold canvas.
+          </p>
+          <div className="flex items-center justify-center space-x-3 pt-2">
+            <PixelButton
+              variant="dark"
+              size="md"
+              onClick={prevStep}
+              icon={<ArrowLeft className="w-4 h-4" />}
+            >
+              PREV [STEP 07]
+            </PixelButton>
+            <PixelButton
+              variant="cyan"
+              size="md"
+              onClick={executeAlgorithm}
+              disabled={isRunningAlgorithm}
+            >
+              {isRunningAlgorithm ? 'EXECUTING...' : 'RUN SIMULATION NOW'}
+            </PixelButton>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="max-w-6xl mx-auto py-6 space-y-6">
+    <div className="max-w-6xl mx-auto py-4 space-y-6">
       {/* Header Banner */}
-      <div className="p-5 rounded-2xl glass-panel border border-indigo-500/20 bg-gradient-to-r from-indigo-950/40 via-purple-950/30 to-cyan-950/40 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="p-4 sm:p-5 border border-[#231542] bg-[#0E091C] shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 rounded-xl bg-purple-600/30 border border-purple-500/40 flex items-center justify-center text-purple-300">
-            <Eye className="w-5 h-5" />
+          <div className="w-9 h-9 border border-[#00F0FF]/40 bg-[#0B1226] flex items-center justify-center text-cyan-300 shadow-sm">
+            <Eye className="w-5 h-5 text-[#00F0FF]" />
           </div>
           <div>
-            <h1 className="text-xl font-bold text-white tracking-tight">Step 8: Interactive Visualization & Manifold Analysis</h1>
-            <p className="text-xs text-gray-300">Inspect resolved cluster partitions, boundary contours, and geometric separations.</p>
+            <div className="flex items-center space-x-2">
+              <span className="font-['Press_Start_2P'] text-[10px] text-[#00F0FF]">STAGE 4</span>
+              <h1 className="font-['Silkscreen'] text-base sm:text-lg font-bold text-white uppercase tracking-wider">
+                Cluster Visualization
+              </h1>
+            </div>
+            <p className="text-xs text-gray-300 mt-0.5 font-sans">
+              Interactive spatial visualization of final cluster assignments, density partitions, and separation boundaries.
+            </p>
           </div>
         </div>
 
-        {can3D && (
-          <button
-            onClick={() => setShow3D(!show3D)}
-            className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-bold transition-all border ${
-              show3D
-                ? 'bg-purple-600 text-white border-purple-400 shadow-lg shadow-purple-500/20'
-                : 'bg-gray-800 text-gray-300 border-gray-700 hover:bg-gray-700'
-            }`}
-          >
-            <Box className="w-4 h-4" />
-            <span>{show3D ? 'Switch to 2D Mode' : 'Switch to 3D Mode'}</span>
-          </button>
-        )}
+        <div className="flex items-center space-x-3">
+          {can3D && (
+            <PixelButton
+              variant="purple"
+              size="sm"
+              onClick={() => setShow3D(!show3D)}
+              icon={<Box className="w-4 h-4" />}
+            >
+              {show3D ? '2D VIEW' : '3D VIEW'}
+            </PixelButton>
+          )}
+
+          <PixelBadge variant="purple">
+            {selectedAlgorithm.toUpperCase()}
+          </PixelBadge>
+        </div>
       </div>
 
       {/* Cluster Distribution Scorecards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <div className="p-4 rounded-xl glass-panel border border-gray-800">
-          <span className="text-[11px] text-gray-400 font-medium">Clusters Discovered</span>
-          <div className="text-xl font-bold text-cyan-400 font-mono mt-0.5">
+        <div className="p-3 border border-[#20133A] bg-[#0E091C] shadow-sm">
+          <span className="font-['Silkscreen'] text-[10px] text-gray-400">CLUSTERS FOUND:</span>
+          <div className="font-mono text-base font-bold text-[#00F0FF] mt-0.5">
             {metrics.num_clusters || 0}
           </div>
         </div>
 
-        <div className="p-4 rounded-xl glass-panel border border-gray-800">
-          <span className="text-[11px] text-gray-400 font-medium">Execution Runtime</span>
-          <div className="text-xl font-bold text-indigo-400 font-mono mt-0.5">
-            {simulationResult?.execution_time_ms ? `${simulationResult.execution_time_ms} ms` : 'N/A'}
+        <div className="p-3 border border-[#20133A] bg-[#0E091C] shadow-sm">
+          <span className="font-['Silkscreen'] text-[10px] text-gray-400">RUNTIME (MS):</span>
+          <div className="font-mono text-base font-bold text-[#39FF14] mt-0.5">
+            {simulationResult?.execution_time_ms ? `${simulationResult.execution_time_ms}` : '0'}
           </div>
         </div>
 
-        <div className="p-4 rounded-xl glass-panel border border-gray-800">
-          <span className="text-[11px] text-gray-400 font-medium">Noise / Outlier Points</span>
-          <div className="text-xl font-bold text-rose-400 font-mono mt-0.5">
+        <div className="p-3 border border-[#20133A] bg-[#0E091C] shadow-sm">
+          <span className="font-['Silkscreen'] text-[10px] text-gray-400">NOISE POINTS:</span>
+          <div className="font-mono text-base font-bold text-[#FF2E93] mt-0.5">
             {metrics.num_noise_points || 0}
           </div>
         </div>
 
-        <div className="p-4 rounded-xl glass-panel border border-gray-800">
-          <span className="text-[11px] text-gray-400 font-medium">Convergence Status</span>
-          <div className="text-sm font-bold text-emerald-400 mt-1">
-            {simulationResult?.converged ? 'Converged Successfully' : 'Completed'}
+        <div className="p-3 border border-[#20133A] bg-[#0E091C] shadow-sm">
+          <span className="font-['Silkscreen'] text-[10px] text-gray-400">STATUS:</span>
+          <div className="font-mono text-xs font-bold text-yellow-400 mt-1">
+            {simulationResult?.converged ? 'CONVERGED' : 'COMPLETED'}
           </div>
         </div>
       </div>
 
       {/* Full Canvas Viewport */}
-      <div className="h-[520px] w-full">
+      <div className="h-[520px] w-full border border-[#1E1136] bg-[#080512]">
         <PlotlyWrapper
           points={points}
           labels={finalClusters}
           featureNames={featureNames}
-          title={`Final Resolved Clustering: ${selectedAlgorithm.toUpperCase()}`}
+          title={`Final Clustered Manifold: ${selectedAlgorithm.toUpperCase()}`}
           height={510}
           show3D={show3D}
         />
       </div>
 
       {/* Navigation Footer */}
-      <div className="flex justify-between pt-4">
-        <button
+      <div className="flex items-center justify-between pt-4 border-t border-[#1E1136]">
+        <PixelButton
+          variant="dark"
+          size="md"
           onClick={prevStep}
-          className="flex items-center space-x-2 px-5 py-2 rounded-xl text-xs font-medium text-gray-300 bg-gray-800/80 hover:bg-gray-700 border border-gray-700 transition-all"
+          icon={<ArrowLeft className="w-4 h-4" />}
         >
-          <ArrowLeft className="w-4 h-4" />
-          <span>Back to Simulation</span>
-        </button>
+          PREV [SIMULATION]
+        </PixelButton>
 
-        <button
+        <PixelButton
+          variant="cyan"
+          size="md"
           onClick={nextStep}
-          className="flex items-center space-x-2 px-6 py-2.5 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 shadow-lg shadow-indigo-600/30 transition-all"
+          icon={<ArrowRight className="w-4 h-4" />}
         >
-          <span>Evaluate Clustering Quality (Silhouette Score)</span>
-          <ArrowRight className="w-4 h-4" />
-        </button>
+          NEXT: EVALUATION METRICS
+        </PixelButton>
       </div>
     </div>
   );

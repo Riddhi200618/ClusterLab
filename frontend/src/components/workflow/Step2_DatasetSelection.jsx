@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useExperiment } from '../../context/ExperimentContext';
-import { FolderOpen, ArrowRight, ArrowLeft, Sliders, Database, Sparkles, RefreshCw } from 'lucide-react';
+import { PixelBadge } from '../common/PixelBadge';
+import { PixelButton } from '../common/PixelButton';
+import { ArrowRight, ArrowLeft, Sliders, Database, RefreshCw } from 'lucide-react';
 
 const DATASET_CARDS = [
   {
@@ -10,6 +12,7 @@ const DATASET_CARDS = [
     samples: 150,
     features: 4,
     badge: 'Benchmark',
+    badgeColor: 'cyan',
     desc: 'Botanical benchmark with 3 species (Setosa, Versicolor, Virginica) across 4 morphological measurements.',
     suitableFor: 'K-Means, EM, DBSCAN',
   },
@@ -20,6 +23,7 @@ const DATASET_CARDS = [
     samples: 200,
     features: 2,
     badge: 'Marketing',
+    badgeColor: 'purple',
     desc: 'Customer segmentation with Annual Income ($k) and Spending Score (1-100) forming 5 distinct clusters.',
     suitableFor: 'K-Means, EM',
   },
@@ -29,7 +33,8 @@ const DATASET_CARDS = [
     category: 'Real-World',
     samples: 178,
     features: 13,
-    badge: 'High-Dimensional',
+    badge: 'High-Dim',
+    badgeColor: 'yellow',
     desc: 'Chemical constituent analysis of 3 Italian wine cultivars with 13 continuous features.',
     suitableFor: 'PCA + K-Means',
   },
@@ -40,6 +45,7 @@ const DATASET_CARDS = [
     samples: 300,
     features: 2,
     badge: 'Spherical',
+    badgeColor: 'lime',
     desc: 'Isotropic Gaussian point distributions designed to validate spherical centroid clustering assumptions.',
     suitableFor: 'K-Means & EM Baseline',
   },
@@ -50,6 +56,7 @@ const DATASET_CARDS = [
     samples: 300,
     features: 2,
     badge: 'Non-Convex',
+    badgeColor: 'pink',
     desc: 'Two interlocking crescent arcs demonstrating failure of distance centroids and superiority of DBSCAN.',
     suitableFor: 'DBSCAN Showcase',
   },
@@ -60,6 +67,7 @@ const DATASET_CARDS = [
     samples: 300,
     features: 2,
     badge: 'Manifold',
+    badgeColor: 'cyan',
     desc: 'Concentric ring manifolds challenging standard Euclidean distance clustering.',
     suitableFor: 'DBSCAN & Kernel Methods',
   },
@@ -70,7 +78,6 @@ export const Step2_DatasetSelection = () => {
     selectedDatasetSlug,
     loadDatasetDetails,
     syntheticParams,
-    setSyntheticParams,
     generateSynthetic,
     nextStep,
     prevStep,
@@ -103,17 +110,30 @@ export const Step2_DatasetSelection = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto py-6 space-y-6">
+    <div className="max-w-5xl mx-auto py-4 space-y-6">
       {/* Header Banner */}
-      <div className="p-6 rounded-2xl glass-panel border border-indigo-500/20 bg-gradient-to-r from-indigo-950/40 via-purple-950/30 to-cyan-950/40">
-        <div className="flex items-center space-x-3 mb-2">
-          <div className="w-10 h-10 rounded-xl bg-cyan-600/30 border border-cyan-500/40 flex items-center justify-center text-cyan-300">
-            <Database className="w-5 h-5" />
+      <div className="p-4 sm:p-5 border border-[#231542] bg-[#0E091C] shadow-sm">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div className="flex items-center space-x-3">
+            <div className="w-9 h-9 border border-[#00F0FF]/40 bg-[#0B1226] flex items-center justify-center text-cyan-300 shadow-sm">
+              <Database className="w-5 h-5 text-[#00F0FF]" />
+            </div>
+            <div>
+              <div className="flex items-center space-x-2">
+                <span className="font-['Press_Start_2P'] text-[10px] text-[#00F0FF]">STAGE 2</span>
+                <h1 className="font-['Silkscreen'] text-base sm:text-lg font-bold text-white uppercase tracking-wider">
+                  Dataset Selection
+                </h1>
+              </div>
+              <p className="text-xs text-gray-300 mt-0.5 font-sans">
+                Select a real benchmark dataset (Iris, Wine, Breast Cancer) or generate synthetic clustering manifolds.
+              </p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-xl font-bold text-white tracking-tight">Step 2: Dataset Selection & Synthesis</h1>
-            <p className="text-xs text-gray-300">Choose a real-world scientific dataset or generate custom synthetic cluster geometries.</p>
-          </div>
+
+          <PixelBadge variant="cyan">
+            DATA PREPARATION
+          </PixelBadge>
         </div>
       </div>
 
@@ -125,31 +145,39 @@ export const Step2_DatasetSelection = () => {
             <div
               key={ds.slug}
               onClick={() => handleSelect(ds.slug)}
-              className={`p-5 rounded-2xl cursor-pointer transition-all relative glass-panel flex flex-col justify-between ${
+              className={`p-4 border transition-all cursor-pointer flex flex-col justify-between relative shadow-sm ${
                 isSelected
-                  ? 'border-cyan-400/80 bg-indigo-950/40 ring-2 ring-cyan-400/30 shadow-xl shadow-cyan-500/10'
-                  : 'border-gray-800/80 hover:border-gray-700 hover:bg-gray-900/60'
+                  ? 'border-[#00F0FF] bg-[#0C152B]'
+                  : 'border-[#20133A] bg-[#0E091C] hover:border-[#3A2269] hover:bg-[#120D24]'
               }`}
             >
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <span className={`text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full ${
-                    ds.category === 'Real-World'
-                      ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30'
-                      : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
-                  }`}>
+                  <PixelBadge variant={ds.badgeColor}>
                     {ds.badge}
+                  </PixelBadge>
+                  <span className="font-mono text-[10px] text-gray-400">
+                    {ds.samples} PTS
                   </span>
-                  <span className="text-xs font-mono text-gray-400">{ds.samples} samples</span>
                 </div>
 
-                <h3 className="text-sm font-bold text-white tracking-tight mt-1">{ds.name}</h3>
-                <p className="text-xs text-gray-400 mt-2 leading-relaxed">{ds.desc}</p>
+                <h3 className="font-['Silkscreen'] text-xs sm:text-sm font-bold text-white mt-1">
+                  {ds.name}
+                </h3>
+                <p className="text-xs text-gray-400 mt-2 leading-relaxed font-sans">
+                  {ds.desc}
+                </p>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-gray-800 flex items-center justify-between text-[11px]">
-                <span className="text-gray-500">Dimensions: <strong className="text-gray-300">{ds.features}D</strong></span>
-                <span className="text-cyan-400 font-semibold">{isSelected ? 'Active Selection' : 'Select'}</span>
+              <div className="mt-4 pt-2.5 border-t border-[#1E1136] flex items-center justify-between text-xs font-mono">
+                <span className="text-gray-400">
+                  DIM: <strong className="text-cyan-300">{ds.features}D</strong>
+                </span>
+                <span className={`font-['Silkscreen'] text-[10px] uppercase font-semibold ${
+                  isSelected ? 'text-[#00F0FF]' : 'text-gray-500'
+                }`}>
+                  {isSelected ? '✓ SELECTED' : 'SELECT'}
+                </span>
               </div>
             </div>
           );
@@ -158,28 +186,30 @@ export const Step2_DatasetSelection = () => {
 
       {/* Synthetic Parameter Controls (Only visible when synthetic dataset is selected) */}
       {isSynthetic && (
-        <div className="p-5 rounded-2xl glass-panel border border-emerald-500/20 bg-emerald-950/10 space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2 text-emerald-400 text-xs font-bold uppercase tracking-wider">
-              <Sliders className="w-4 h-4" />
-              <span>Synthetic Generator Parameters</span>
+        <div className="border border-emerald-500/40 bg-[#09150E] p-4 sm:p-5 shadow-sm space-y-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-emerald-900/40 pb-2.5">
+            <div className="flex items-center space-x-2 text-[#39FF14] font-['Silkscreen'] text-xs font-bold uppercase tracking-wider">
+              <Sliders className="w-4 h-4 text-[#39FF14]" />
+              <span>Synthetic Dataset Parameters</span>
             </div>
 
-            <button
+            <PixelButton
+              variant="lime"
+              size="sm"
               onClick={handleRegenerate}
               disabled={loading}
-              className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-200 border border-emerald-500/30 transition-all"
+              icon={<RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />}
             >
-              <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
-              <span>Regenerate Random Points</span>
-            </button>
+              REGENERATE
+            </PixelButton>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div>
-              <label className="text-xs text-gray-400 block mb-1">
-                Sample Count: <strong className="text-white">{localSyntheticParams.n_samples}</strong>
-              </label>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            <div className="space-y-1">
+              <div className="flex items-center justify-between text-xs font-mono text-gray-300">
+                <span>SAMPLE COUNT:</span>
+                <span className="text-[#39FF14] font-bold">{localSyntheticParams.n_samples}</span>
+              </div>
               <input
                 type="range"
                 min="100"
@@ -192,14 +222,15 @@ export const Step2_DatasetSelection = () => {
                   setLocalSyntheticParams(updated);
                   generateSynthetic(updated);
                 }}
-                className="w-full accent-emerald-500 cursor-pointer"
+                className="w-full accent-[#39FF14] cursor-pointer"
               />
             </div>
 
-            <div>
-              <label className="text-xs text-gray-400 block mb-1">
-                Noise / Dispersion: <strong className="text-white">{localSyntheticParams.noise.toFixed(2)}</strong>
-              </label>
+            <div className="space-y-1">
+              <div className="flex items-center justify-between text-xs font-mono text-gray-300">
+                <span>DISPERSION / NOISE:</span>
+                <span className="text-[#39FF14] font-bold">{localSyntheticParams.noise.toFixed(2)}</span>
+              </div>
               <input
                 type="range"
                 min="0.01"
@@ -212,15 +243,16 @@ export const Step2_DatasetSelection = () => {
                   setLocalSyntheticParams(updated);
                   generateSynthetic(updated);
                 }}
-                className="w-full accent-emerald-500 cursor-pointer"
+                className="w-full accent-[#39FF14] cursor-pointer"
               />
             </div>
 
             {selectedDatasetSlug === 'synthetic_blobs' && (
-              <div>
-                <label className="text-xs text-gray-400 block mb-1">
-                  Cluster Centers (K): <strong className="text-white">{localSyntheticParams.centers}</strong>
-                </label>
+              <div className="space-y-1">
+                <div className="flex items-center justify-between text-xs font-mono text-gray-300">
+                  <span>CENTERS (K):</span>
+                  <span className="text-[#39FF14] font-bold">{localSyntheticParams.centers}</span>
+                </div>
                 <input
                   type="range"
                   min="2"
@@ -233,7 +265,7 @@ export const Step2_DatasetSelection = () => {
                     setLocalSyntheticParams(updated);
                     generateSynthetic(updated);
                   }}
-                  className="w-full accent-emerald-500 cursor-pointer"
+                  className="w-full accent-[#39FF14] cursor-pointer"
                 />
               </div>
             )}
@@ -242,22 +274,24 @@ export const Step2_DatasetSelection = () => {
       )}
 
       {/* Navigation Footer */}
-      <div className="flex justify-between pt-4">
-        <button
+      <div className="flex items-center justify-between pt-4 border-t border-[#1E1136]">
+        <PixelButton
+          variant="dark"
+          size="md"
           onClick={prevStep}
-          className="flex items-center space-x-2 px-5 py-2 rounded-xl text-xs font-medium text-gray-300 bg-gray-800/80 hover:bg-gray-700 border border-gray-700 transition-all"
+          icon={<ArrowLeft className="w-4 h-4" />}
         >
-          <ArrowLeft className="w-4 h-4" />
-          <span>Back to Theory</span>
-        </button>
+          PREV [STAGE 1]
+        </PixelButton>
 
-        <button
+        <PixelButton
+          variant="cyan"
+          size="md"
           onClick={nextStep}
-          className="flex items-center space-x-2 px-6 py-2.5 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 shadow-lg shadow-indigo-600/30 transition-all"
+          icon={<ArrowRight className="w-4 h-4" />}
         >
-          <span>Preview Dataset</span>
-          <ArrowRight className="w-4 h-4" />
-        </button>
+          NEXT: DATASET PREVIEW
+        </PixelButton>
       </div>
     </div>
   );
