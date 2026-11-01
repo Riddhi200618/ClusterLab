@@ -41,7 +41,7 @@ export const PixelCard = ({
             {icon && <span className="flex-shrink-0">{icon}</span>}
             <div className="min-w-0">
               {title && (
-                <h3 className="font-['Silkscreen'] text-xs uppercase tracking-wider font-bold text-white truncate">
+                <h3 className="font-sans text-xs normal-case tracking-normal font-bold text-white truncate">
                   {title}
                 </h3>
               )}

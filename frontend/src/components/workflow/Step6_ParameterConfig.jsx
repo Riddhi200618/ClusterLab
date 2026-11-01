@@ -35,13 +35,13 @@ export const Step6_ParameterConfig = () => {
             </div>
             <div>
               <div className="flex items-center space-x-2">
-                <span className="font-['Press_Start_2P'] text-[10px] text-[#00F0FF]">STAGE 3</span>
-                <h1 className="font-['Silkscreen'] text-base sm:text-lg font-bold text-white uppercase tracking-wider">
+                <span className="font-sans text-[10px] text-[#00F0FF]">STAGE 3</span>
+                <h1 className="font-sans text-base sm:text-lg font-bold text-white normal-case tracking-normal">
                   Parameter Configuration
                 </h1>
               </div>
               <p className="text-xs text-gray-300 mt-0.5 font-sans">
-                Configure hyperparameters and convergence tolerances for <strong className="text-[#00F0FF] uppercase">{selectedAlgorithm}</strong>.
+                Set the parameters for the selected algorithm.
               </p>
             </div>
           </div>
@@ -60,13 +60,13 @@ export const Step6_ParameterConfig = () => {
             {/* Cluster Count K */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <label className="text-xs font-['Silkscreen'] font-bold text-white flex items-center space-x-2">
+                <label className="text-xs font-sans font-bold text-white flex items-center space-x-2">
                   <span>TARGET CLUSTER COUNT (K):</span>
-                  <span className="font-mono text-xs text-[#00F0FF] bg-[#0C152B] px-2 py-0.5 border border-[#00F0FF]/40 font-bold">
+                  <span className="font-sans text-xs text-[#00F0FF] bg-[#0C152B] px-2 py-0.5 border border-[#00F0FF]/40 font-bold">
                     {kmeansParams.k}
                   </span>
                 </label>
-                <span className="text-[11px] text-gray-400 font-mono">1 to 8 Prototypes</span>
+                <span className="text-[11px] text-gray-400 font-sans">1 to 8 Prototypes</span>
               </div>
               <input
                 type="range"
@@ -77,7 +77,7 @@ export const Step6_ParameterConfig = () => {
                 onChange={(e) => setKmeansParams({ ...kmeansParams, k: parseInt(e.target.value, 10) })}
                 className="w-full accent-[#00F0FF] h-2 bg-[#090514] cursor-pointer"
               />
-              <div className="flex justify-between text-[10px] text-gray-500 font-mono">
+              <div className="flex justify-between text-[10px] text-gray-500 font-sans">
                 <span>K=1</span>
                 <span>K=4</span>
                 <span>K=8</span>
@@ -86,7 +86,7 @@ export const Step6_ParameterConfig = () => {
 
             {/* Initialization Method */}
             <div className="space-y-2">
-              <label className="text-xs font-['Silkscreen'] font-bold text-gray-300 uppercase tracking-wider block">
+              <label className="text-xs font-sans font-bold text-gray-300 normal-case tracking-normal block">
                 Centroid Initialization Strategy:
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -113,7 +113,7 @@ export const Step6_ParameterConfig = () => {
                           : 'border-[#20133A] bg-[#0A0617] text-gray-400 hover:border-[#3A2269]'
                       }`}
                     >
-                      <div className="font-['Silkscreen'] text-xs font-bold text-white">{init.name}</div>
+                      <div className="font-sans text-xs font-bold text-white">{init.name}</div>
                       <p className="text-[11px] text-gray-400 mt-1 font-sans">{init.desc}</p>
                     </div>
                   );
@@ -123,7 +123,7 @@ export const Step6_ParameterConfig = () => {
 
             {/* Max Iterations */}
             <div className="space-y-2">
-              <div className="flex justify-between text-xs font-mono text-gray-300 font-semibold">
+              <div className="flex justify-between text-xs font-sans text-gray-300 font-semibold">
                 <span>MAX ALLOWED ITERATIONS:</span>
                 <span className="text-[#00F0FF] font-bold">{kmeansParams.max_iter}</span>
               </div>
@@ -146,9 +146,9 @@ export const Step6_ParameterConfig = () => {
             {/* Number of Components */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <label className="text-xs font-['Silkscreen'] font-bold text-white flex items-center space-x-2">
+                <label className="text-xs font-sans font-bold text-white flex items-center space-x-2">
                   <span>GAUSSIAN COMPONENTS (K):</span>
-                  <span className="font-mono text-xs text-[#39FF14] bg-[#08150D] px-2 py-0.5 border border-[#39FF14]/40 font-bold">
+                  <span className="font-sans text-xs text-[#39FF14] bg-[#08150D] px-2 py-0.5 border border-[#39FF14]/40 font-bold">
                     {emParams.n_components}
                   </span>
                 </label>
@@ -166,7 +166,7 @@ export const Step6_ParameterConfig = () => {
 
             {/* Covariance Type */}
             <div className="space-y-2">
-              <label className="text-xs font-['Silkscreen'] font-bold text-gray-300 uppercase tracking-wider block">
+              <label className="text-xs font-sans font-bold text-gray-300 normal-case tracking-normal block">
                 Covariance Matrix Structure:
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -186,7 +186,7 @@ export const Step6_ParameterConfig = () => {
                           : 'border-[#20133A] bg-[#0A0617] text-gray-400 hover:border-[#3A2269]'
                       }`}
                     >
-                      <div className="font-['Silkscreen'] text-xs font-bold text-white">{cov.name}</div>
+                      <div className="font-sans text-xs font-bold text-white">{cov.name}</div>
                       <p className="text-[10px] text-gray-400 mt-1 font-sans">{cov.desc}</p>
                     </div>
                   );
@@ -202,13 +202,13 @@ export const Step6_ParameterConfig = () => {
             {/* Epsilon */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <label className="text-xs font-['Silkscreen'] font-bold text-white flex items-center space-x-2">
+                <label className="text-xs font-sans font-bold text-white flex items-center space-x-2">
                   <span>EPSILON RADIUS (ε):</span>
-                  <span className="font-mono text-xs text-[#FF2E93] bg-[#160819] px-2 py-0.5 border border-[#FF2E93]/40 font-bold">
+                  <span className="font-sans text-xs text-[#FF2E93] bg-[#160819] px-2 py-0.5 border border-[#FF2E93]/40 font-bold">
                     {dbscanParams.eps.toFixed(2)}
                   </span>
                 </label>
-                <span className="text-[11px] text-gray-400 font-mono">Neighborhood Radius</span>
+                <span className="text-[11px] text-gray-400 font-sans">Neighborhood Radius</span>
               </div>
               <input
                 type="range"
@@ -219,7 +219,7 @@ export const Step6_ParameterConfig = () => {
                 onChange={(e) => setDbscanParams({ ...dbscanParams, eps: parseFloat(e.target.value) })}
                 className="w-full accent-[#FF2E93] h-2 bg-[#090514] cursor-pointer"
               />
-              <div className="flex justify-between text-[10px] text-gray-500 font-mono">
+              <div className="flex justify-between text-[10px] text-gray-500 font-sans">
                 <span>0.05 (Tight)</span>
                 <span>0.50 (Moderate)</span>
                 <span>1.50 (Loose)</span>
@@ -229,13 +229,13 @@ export const Step6_ParameterConfig = () => {
             {/* MinPts */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <label className="text-xs font-['Silkscreen'] font-bold text-white flex items-center space-x-2">
+                <label className="text-xs font-sans font-bold text-white flex items-center space-x-2">
                   <span>MIN SAMPLES THRESHOLD (MINPTS):</span>
-                  <span className="font-mono text-xs text-[#FF2E93] bg-[#160819] px-2 py-0.5 border border-[#FF2E93]/40 font-bold">
+                  <span className="font-sans text-xs text-[#FF2E93] bg-[#160819] px-2 py-0.5 border border-[#FF2E93]/40 font-bold">
                     {dbscanParams.min_samples}
                   </span>
                 </label>
-                <span className="text-[11px] text-gray-400 font-mono">Core Point Threshold</span>
+                <span className="text-[11px] text-gray-400 font-sans">Core Point Threshold</span>
               </div>
               <input
                 type="range"

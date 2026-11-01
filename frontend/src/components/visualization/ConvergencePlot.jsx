@@ -47,7 +47,7 @@ export const ConvergencePlot = ({ steps = [], algorithmType = 'kmeans', height =
           },
         ]}
         layout={{
-          title: { text: title, font: { color: '#F3F4F6', size: 12, family: 'Silkscreen, monospace' } },
+          title: { text: title, font: { color: '#F3F4F6', size: 12, family: 'Inter, system-ui, sans-serif' } },
           autosize: true,
           height,
           margin: { l: 50, r: 20, t: 30, b: 35 },

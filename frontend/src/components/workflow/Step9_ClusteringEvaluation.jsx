@@ -22,7 +22,7 @@ export const Step9_ClusteringEvaluation = () => {
   if (!simulationResult) {
     return (
       <div className="max-w-4xl mx-auto py-8 space-y-6">
-        <div className="p-8 border border-[#231542] bg-[#0E091C] shadow-sm text-center space-y-4 font-mono">
+        <div className="p-8 border border-[#231542] bg-[#0E091C] shadow-sm text-center space-y-4 font-sans">
           <p className="text-[#00F0FF] text-sm font-semibold">
             EVALUATION METRICS PENDING SIMULATION...
           </p>
@@ -63,13 +63,13 @@ export const Step9_ClusteringEvaluation = () => {
             </div>
             <div>
               <div className="flex items-center space-x-2">
-                <span className="font-['Press_Start_2P'] text-[10px] text-[#00F0FF]">STAGE 4</span>
-                <h1 className="font-['Silkscreen'] text-base sm:text-lg font-bold text-white uppercase tracking-wider">
+                <span className="font-sans text-[10px] text-[#00F0FF]">STAGE 4</span>
+                <h1 className="font-sans text-base sm:text-lg font-bold text-white normal-case tracking-normal">
                   Clustering Evaluation
                 </h1>
               </div>
               <p className="text-xs text-gray-300 mt-0.5 font-sans">
-                Quantify cluster cohesion and separation using the Silhouette Coefficient, Davies-Bouldin Index, and Calinski-Harabasz Index.
+                Evaluate how well the clusters are separated.
               </p>
             </div>
           </div>
@@ -86,21 +86,21 @@ export const Step9_ClusteringEvaluation = () => {
         <div className="p-4 sm:p-5 border border-[#00F0FF]/40 bg-[#0C152B] shadow-sm flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between">
-              <span className="font-['Silkscreen'] text-[10px] font-bold text-[#00F0FF] uppercase tracking-wider">
+              <span className="font-sans text-[10px] font-bold text-[#00F0FF] normal-case tracking-normal">
                 1. SILHOUETTE SCORE
               </span>
               <PixelBadge variant="cyan">MAX +1.0</PixelBadge>
             </div>
-            <div className="font-mono text-2xl sm:text-3xl font-bold text-white mt-2">
+            <div className="font-sans text-2xl sm:text-3xl font-bold text-white mt-2">
               {metrics.silhouette_score !== null && metrics.silhouette_score !== undefined
                 ? metrics.silhouette_score.toFixed(3)
                 : 'N/A'}
             </div>
             <p className="text-xs text-gray-300 mt-2 font-sans leading-relaxed">
-              Range [-1, +1]. Measures how cohesive each point is to its own cluster vs nearest neighbors.
+              Ranges from -1 to 1. Higher values mean better separated clusters.
             </p>
           </div>
-          <div className="text-[10px] font-mono text-[#00F0FF] mt-3 font-semibold uppercase">
+          <div className="text-[10px] font-sans text-[#00F0FF] mt-3 font-semibold normal-case">
             ▲ HIGHER IS BETTER
           </div>
         </div>
@@ -109,21 +109,21 @@ export const Step9_ClusteringEvaluation = () => {
         <div className="p-4 sm:p-5 border border-[#9D00FF]/40 bg-[#120824] shadow-sm flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between">
-              <span className="font-['Silkscreen'] text-[10px] font-bold text-[#D8B4FE] uppercase tracking-wider">
+              <span className="font-sans text-[10px] font-bold text-[#D8B4FE] normal-case tracking-normal">
                 2. DAVIES-BOULDIN
               </span>
               <PixelBadge variant="purple">IDEAL 0.0</PixelBadge>
             </div>
-            <div className="font-mono text-2xl sm:text-3xl font-bold text-white mt-2">
+            <div className="font-sans text-2xl sm:text-3xl font-bold text-white mt-2">
               {metrics.davies_bouldin_index !== null && metrics.davies_bouldin_index !== undefined
                 ? metrics.davies_bouldin_index.toFixed(3)
                 : 'N/A'}
             </div>
             <p className="text-xs text-gray-300 mt-2 font-sans leading-relaxed">
-              Similarity ratio comparing intra-cluster spread against inter-cluster separation.
+              Compares cluster spread with separation. Lower is better.
             </p>
           </div>
-          <div className="text-[10px] font-mono text-[#D8B4FE] mt-3 font-semibold uppercase">
+          <div className="text-[10px] font-sans text-[#D8B4FE] mt-3 font-semibold normal-case">
             ▼ LOWER IS BETTER
           </div>
         </div>
@@ -132,21 +132,21 @@ export const Step9_ClusteringEvaluation = () => {
         <div className="p-4 sm:p-5 border border-[#39FF14]/40 bg-[#08150D] shadow-sm flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between">
-              <span className="font-['Silkscreen'] text-[10px] font-bold text-[#39FF14] uppercase tracking-wider">
+              <span className="font-sans text-[10px] font-bold text-[#39FF14] normal-case tracking-normal">
                 3. CALINSKI-HARABASZ
               </span>
               <PixelBadge variant="lime">RATIO</PixelBadge>
             </div>
-            <div className="font-mono text-2xl sm:text-3xl font-bold text-white mt-2">
+            <div className="font-sans text-2xl sm:text-3xl font-bold text-white mt-2">
               {metrics.calinski_harabasz_index !== null && metrics.calinski_harabasz_index !== undefined
                 ? metrics.calinski_harabasz_index.toFixed(1)
                 : 'N/A'}
             </div>
             <p className="text-xs text-gray-300 mt-2 font-sans leading-relaxed">
-              Variance ratio criterion (between-cluster dispersion divided by within-cluster dispersion).
+              Compares variation between clusters with variation within them. Higher is better.
             </p>
           </div>
-          <div className="text-[10px] font-mono text-[#39FF14] mt-3 font-semibold uppercase">
+          <div className="text-[10px] font-sans text-[#39FF14] mt-3 font-semibold normal-case">
             ▲ HIGHER IS BETTER
           </div>
         </div>

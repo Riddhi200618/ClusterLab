@@ -17,7 +17,7 @@ export const Step3_DatasetPreview = () => {
 
   if (!datasetDetails) {
     return (
-      <div className="border border-[#231542] bg-[#0E091C] p-8 text-center text-gray-400 font-mono shadow-sm">
+      <div className="border border-[#231542] bg-[#0E091C] p-8 text-center text-gray-400 font-sans shadow-sm">
         <p className="text-sm text-[#00F0FF]">LOADING DATASET PREVIEW...</p>
       </div>
     );
@@ -36,13 +36,13 @@ export const Step3_DatasetPreview = () => {
             </div>
             <div>
               <div className="flex items-center space-x-2">
-                <span className="font-['Press_Start_2P'] text-[10px] text-[#00F0FF]">STAGE 2</span>
-                <h1 className="font-['Silkscreen'] text-base sm:text-lg font-bold text-white uppercase tracking-wider">
+                <span className="font-sans text-[10px] text-[#00F0FF]">STAGE 2</span>
+                <h1 className="font-sans text-base sm:text-lg font-bold text-white normal-case tracking-normal">
                   Dataset Preview & Statistics
                 </h1>
               </div>
               <p className="text-xs text-gray-300 mt-0.5 font-sans">
-                Inspect sample counts, summary statistics, and raw coordinate distributions for the loaded dataset.
+                Check the data table and plot before clustering.
               </p>
             </div>
           </div>
@@ -56,20 +56,20 @@ export const Step3_DatasetPreview = () => {
       {/* Summary Stat Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <div className="p-3 border border-[#20133A] bg-[#0E091C] shadow-sm">
-          <span className="font-['Silkscreen'] text-[10px] text-gray-400">DATASET:</span>
-          <div className="font-mono text-xs font-bold text-white mt-1 truncate">{name}</div>
+          <span className="font-sans text-[10px] text-gray-400">DATASET:</span>
+          <div className="font-sans text-xs font-bold text-white mt-1 truncate">{name}</div>
         </div>
         <div className="p-3 border border-[#20133A] bg-[#0E091C] shadow-sm">
-          <span className="font-['Silkscreen'] text-[10px] text-gray-400">SAMPLES (N):</span>
-          <div className="font-mono text-base font-bold text-[#00F0FF] mt-0.5">{sample_count}</div>
+          <span className="font-sans text-[10px] text-gray-400">SAMPLES (N):</span>
+          <div className="font-sans text-base font-bold text-[#00F0FF] mt-0.5">{sample_count}</div>
         </div>
         <div className="p-3 border border-[#20133A] bg-[#0E091C] shadow-sm">
-          <span className="font-['Silkscreen'] text-[10px] text-gray-400">FEATURES (D):</span>
-          <div className="font-mono text-base font-bold text-[#FF2E93] mt-0.5">{feature_count}</div>
+          <span className="font-sans text-[10px] text-gray-400">FEATURES (D):</span>
+          <div className="font-sans text-base font-bold text-[#FF2E93] mt-0.5">{feature_count}</div>
         </div>
         <div className="p-3 border border-[#20133A] bg-[#0E091C] shadow-sm">
-          <span className="font-['Silkscreen'] text-[10px] text-gray-400">DEFAULT VIEW:</span>
-          <div className="font-mono text-xs text-[#39FF14] mt-1 truncate">{default_features.join(' vs ')}</div>
+          <span className="font-sans text-[10px] text-gray-400">DEFAULT VIEW:</span>
+          <div className="font-sans text-xs text-[#39FF14] mt-1 truncate">{default_features.join(' vs ')}</div>
         </div>
       </div>
 
@@ -79,15 +79,15 @@ export const Step3_DatasetPreview = () => {
         <div className="border border-[#20133A] bg-[#0E091C] p-4 shadow-sm flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between pb-2.5 border-b border-[#1E1136] mb-3">
-              <h3 className="font-['Silkscreen'] text-xs font-bold text-white uppercase tracking-wider flex items-center space-x-2">
+              <h3 className="font-sans text-xs font-bold text-white normal-case tracking-normal flex items-center space-x-2">
                 <BarChart2 className="w-4 h-4 text-[#00F0FF]" />
                 <span>Feature Statistics (Moments & Bounds)</span>
               </h3>
             </div>
 
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs font-mono">
-                <thead className="text-gray-400 uppercase bg-[#090514] border-b border-[#20133A]">
+              <table className="w-full text-left text-xs font-sans">
+                <thead className="text-gray-400 normal-case bg-[#090514] border-b border-[#20133A]">
                   <tr>
                     <th className="px-3 py-2">Feature</th>
                     <th className="px-3 py-2">Mean</th>
@@ -110,10 +110,10 @@ export const Step3_DatasetPreview = () => {
 
             {/* Sample Records Snippet */}
             <div className="mt-4 pt-3 border-t border-[#1E1136]">
-              <div className="font-['Silkscreen'] text-[10px] text-gray-400 uppercase font-bold mb-2">
+              <div className="font-sans text-[10px] text-gray-400 normal-case font-bold mb-2">
                 First 5 Sample Records:
               </div>
-              <div className="overflow-x-auto border border-[#1E1136] bg-[#07040E] p-2 font-mono text-[11px]">
+              <div className="overflow-x-auto border border-[#1E1136] bg-[#07040E] p-2 font-sans text-[11px]">
                 <table className="w-full">
                   <thead className="text-gray-500 border-b border-[#1E1136]">
                     <tr>
@@ -143,7 +143,7 @@ export const Step3_DatasetPreview = () => {
         <div className="border border-[#20133A] bg-[#0E091C] p-4 shadow-sm flex flex-col">
           <div className="flex items-center space-x-2 pb-2.5 border-b border-[#1E1136] mb-3">
             <Eye className="w-4 h-4 text-[#00F0FF]" />
-            <h3 className="font-['Silkscreen'] text-xs font-bold text-white uppercase tracking-wider">
+            <h3 className="font-sans text-xs font-bold text-white normal-case tracking-normal">
               Unclustered Raw Spatial Scatter
             </h3>
           </div>

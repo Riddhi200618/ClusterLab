@@ -13,7 +13,7 @@ const DATASET_CARDS = [
     features: 4,
     badge: 'Benchmark',
     badgeColor: 'cyan',
-    desc: 'Botanical benchmark with 3 species (Setosa, Versicolor, Virginica) across 4 morphological measurements.',
+    desc: 'Flower measurements from three Iris species.',
     suitableFor: 'K-Means, EM, DBSCAN',
   },
   {
@@ -24,7 +24,7 @@ const DATASET_CARDS = [
     features: 2,
     badge: 'Marketing',
     badgeColor: 'purple',
-    desc: 'Customer segmentation with Annual Income ($k) and Spending Score (1-100) forming 5 distinct clusters.',
+    desc: 'Customer income and spending scores.',
     suitableFor: 'K-Means, EM',
   },
   {
@@ -35,8 +35,8 @@ const DATASET_CARDS = [
     features: 13,
     badge: 'High-Dim',
     badgeColor: 'yellow',
-    desc: 'Chemical constituent analysis of 3 Italian wine cultivars with 13 continuous features.',
-    suitableFor: 'PCA + K-Means',
+    desc: '13 chemical measurements from three types of wine.',
+    suitableFor: 'K-Means, EM',
   },
   {
     slug: 'synthetic_blobs',
@@ -46,7 +46,7 @@ const DATASET_CARDS = [
     features: 2,
     badge: 'Spherical',
     badgeColor: 'lime',
-    desc: 'Isotropic Gaussian point distributions designed to validate spherical centroid clustering assumptions.',
+    desc: 'Generated points in round groups.',
     suitableFor: 'K-Means & EM Baseline',
   },
   {
@@ -57,7 +57,7 @@ const DATASET_CARDS = [
     features: 2,
     badge: 'Non-Convex',
     badgeColor: 'pink',
-    desc: 'Two interlocking crescent arcs demonstrating failure of distance centroids and superiority of DBSCAN.',
+    desc: 'Generated points in two curved groups.',
     suitableFor: 'DBSCAN Showcase',
   },
   {
@@ -68,8 +68,8 @@ const DATASET_CARDS = [
     features: 2,
     badge: 'Manifold',
     badgeColor: 'cyan',
-    desc: 'Concentric ring manifolds challenging standard Euclidean distance clustering.',
-    suitableFor: 'DBSCAN & Kernel Methods',
+    desc: 'Generated points in inner and outer rings.',
+    suitableFor: 'DBSCAN',
   },
 ];
 
@@ -120,13 +120,13 @@ export const Step2_DatasetSelection = () => {
             </div>
             <div>
               <div className="flex items-center space-x-2">
-                <span className="font-['Press_Start_2P'] text-[10px] text-[#00F0FF]">STAGE 2</span>
-                <h1 className="font-['Silkscreen'] text-base sm:text-lg font-bold text-white uppercase tracking-wider">
+                <span className="font-sans text-[10px] text-[#00F0FF]">STAGE 2</span>
+                <h1 className="font-sans text-base sm:text-lg font-bold text-white normal-case tracking-normal">
                   Dataset Selection
                 </h1>
               </div>
               <p className="text-xs text-gray-300 mt-0.5 font-sans">
-                Select a real benchmark dataset (Iris, Wine, Breast Cancer) or generate synthetic clustering manifolds.
+                Choose a dataset or generate sample data.
               </p>
             </div>
           </div>
@@ -156,12 +156,12 @@ export const Step2_DatasetSelection = () => {
                   <PixelBadge variant={ds.badgeColor}>
                     {ds.badge}
                   </PixelBadge>
-                  <span className="font-mono text-[10px] text-gray-400">
+                  <span className="font-sans text-[10px] text-gray-400">
                     {ds.samples} PTS
                   </span>
                 </div>
 
-                <h3 className="font-['Silkscreen'] text-xs sm:text-sm font-bold text-white mt-1">
+                <h3 className="font-sans text-xs sm:text-sm font-bold text-white mt-1">
                   {ds.name}
                 </h3>
                 <p className="text-xs text-gray-400 mt-2 leading-relaxed font-sans">
@@ -169,11 +169,11 @@ export const Step2_DatasetSelection = () => {
                 </p>
               </div>
 
-              <div className="mt-4 pt-2.5 border-t border-[#1E1136] flex items-center justify-between text-xs font-mono">
+              <div className="mt-4 pt-2.5 border-t border-[#1E1136] flex items-center justify-between text-xs font-sans">
                 <span className="text-gray-400">
                   DIM: <strong className="text-cyan-300">{ds.features}D</strong>
                 </span>
-                <span className={`font-['Silkscreen'] text-[10px] uppercase font-semibold ${
+                <span className={`font-sans text-[10px] normal-case font-semibold ${
                   isSelected ? 'text-[#00F0FF]' : 'text-gray-500'
                 }`}>
                   {isSelected ? '✓ SELECTED' : 'SELECT'}
@@ -188,7 +188,7 @@ export const Step2_DatasetSelection = () => {
       {isSynthetic && (
         <div className="border border-emerald-500/40 bg-[#09150E] p-4 sm:p-5 shadow-sm space-y-4">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-emerald-900/40 pb-2.5">
-            <div className="flex items-center space-x-2 text-[#39FF14] font-['Silkscreen'] text-xs font-bold uppercase tracking-wider">
+            <div className="flex items-center space-x-2 text-[#39FF14] font-sans text-xs font-bold normal-case tracking-normal">
               <Sliders className="w-4 h-4 text-[#39FF14]" />
               <span>Synthetic Dataset Parameters</span>
             </div>
@@ -206,7 +206,7 @@ export const Step2_DatasetSelection = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             <div className="space-y-1">
-              <div className="flex items-center justify-between text-xs font-mono text-gray-300">
+              <div className="flex items-center justify-between text-xs font-sans text-gray-300">
                 <span>SAMPLE COUNT:</span>
                 <span className="text-[#39FF14] font-bold">{localSyntheticParams.n_samples}</span>
               </div>
@@ -227,7 +227,7 @@ export const Step2_DatasetSelection = () => {
             </div>
 
             <div className="space-y-1">
-              <div className="flex items-center justify-between text-xs font-mono text-gray-300">
+              <div className="flex items-center justify-between text-xs font-sans text-gray-300">
                 <span>DISPERSION / NOISE:</span>
                 <span className="text-[#39FF14] font-bold">{localSyntheticParams.noise.toFixed(2)}</span>
               </div>
@@ -249,7 +249,7 @@ export const Step2_DatasetSelection = () => {
 
             {selectedDatasetSlug === 'synthetic_blobs' && (
               <div className="space-y-1">
-                <div className="flex items-center justify-between text-xs font-mono text-gray-300">
+                <div className="flex items-center justify-between text-xs font-sans text-gray-300">
                   <span>CENTERS (K):</span>
                   <span className="text-[#39FF14] font-bold">{localSyntheticParams.centers}</span>
                 </div>

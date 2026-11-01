@@ -19,7 +19,7 @@ export const PixelBadge = ({
 
   return (
     <span
-      className={`inline-flex items-center space-x-1.5 px-2 py-0.5 border text-[10px] font-['Silkscreen'] uppercase tracking-wide font-medium ${variantClass} ${className}`}
+      className={`inline-flex items-center space-x-1.5 px-2 py-0.5 border text-[10px] font-sans normal-case tracking-normal font-medium ${variantClass} ${className}`}
     >
       {icon && <span className="flex-shrink-0">{icon}</span>}
       <span>{children}</span>

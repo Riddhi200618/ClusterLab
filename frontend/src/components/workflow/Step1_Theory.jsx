@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useExperiment } from '../../context/ExperimentContext';
-import { MathBlock, InlineMath } from '../common/MathBlock';
+import { MathBlock } from '../common/MathBlock';
 import { PixelBadge } from '../common/PixelBadge';
 import { PixelButton } from '../common/PixelButton';
 import { PixelCard } from '../common/PixelCard';
@@ -22,13 +22,13 @@ export const Step1_Theory = () => {
             </div>
             <div>
               <div className="flex items-center space-x-2">
-                <span className="font-['Press_Start_2P'] text-[10px] text-[#00F0FF]">STAGE 1</span>
-                <h1 className="font-['Silkscreen'] text-base sm:text-lg font-bold text-white uppercase tracking-wider">
-                  Clustering Theory & Foundations
+                <span className="font-sans text-[10px] text-[#00F0FF]">STAGE 1</span>
+                <h1 className="font-sans text-base sm:text-lg font-bold text-white normal-case tracking-normal">
+                  Clustering Basics
                 </h1>
               </div>
               <p className="text-xs text-gray-300 mt-0.5 font-sans">
-                Foundational mathematical mechanics, objective functions, and algorithmic updates for K-Means, EM/GMM, and DBSCAN.
+                Understand how K-Means, EM and DBSCAN group similar data points.
               </p>
             </div>
           </div>
@@ -52,7 +52,7 @@ export const Step1_Theory = () => {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center space-x-2 px-3 py-1.5 text-xs font-['Silkscreen'] uppercase font-bold border transition-all ${
+              className={`flex items-center space-x-2 px-3 py-1.5 text-xs font-sans normal-case font-bold border transition-all ${
                 isActive
                   ? 'bg-[#0B1426] border-[#00F0FF] text-white shadow-sm'
                   : 'bg-[#0E091C] border-[#20133A] text-gray-400 hover:text-white hover:border-[#3A2269] shadow-sm'
@@ -71,26 +71,26 @@ export const Step1_Theory = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <PixelCard
               variant="cyan"
-              title="Core Intuition & Objective"
+              title="What it does"
               badge={<PixelBadge variant="cyan">CENTROID</PixelBadge>}
             >
               <p className="text-xs text-gray-300 leading-relaxed font-sans">
-                K-Means partitions <InlineMath math="N" /> observations into <InlineMath math="K" /> non-overlapping spherical clusters. Each point belongs to the cluster with the nearest mean (centroid), serving as a prototype of the cluster.
+                K-Means divides data into K groups. Each point joins the group with the nearest centre, called a centroid.
               </p>
               <p className="text-xs text-gray-400 leading-relaxed font-sans mt-2">
-                The algorithm minimizes the Within-Cluster Sum of Squares (WCSS), also known as inertia or total squared error.
+                It reduces WCSS: the sum of squared distances from points to their cluster centre.
               </p>
             </PixelCard>
 
             <PixelCard
               variant="purple"
-              title="Lloyd's 2-Phase Iteration"
+              title="How it works"
               badge={<PixelBadge variant="purple">CONVERGENCE</PixelBadge>}
             >
               <ul className="text-xs text-gray-300 space-y-2 list-disc list-inside font-sans">
-                <li><strong className="text-gray-100">Assignment Step:</strong> Assign each data point <InlineMath math="x_i" /> to its nearest centroid <InlineMath math="\mu_k" />.</li>
-                <li><strong className="text-gray-100">Update Step:</strong> Recompute each centroid <InlineMath math="\mu_k" /> as the arithmetic mean of all points assigned to cluster <InlineMath math="k" />.</li>
-                <li><strong className="text-gray-100">Convergence:</strong> Stops when centroid movements fall below tolerance <InlineMath math="\varepsilon" /> or max iterations are reached.</li>
+                <li><strong className="text-gray-100">Assignment Step:</strong> Assign each point to its nearest centre.</li>
+                <li><strong className="text-gray-100">Update Step:</strong> Move each centre to the average of its assigned points.</li>
+                <li><strong className="text-gray-100">Convergence:</strong> Stop when centres barely move or the iteration limit is reached.</li>
               </ul>
             </PixelCard>
           </div>
@@ -98,7 +98,7 @@ export const Step1_Theory = () => {
           <MathBlock
             title="K-Means Objective Function (WCSS)"
             formula="\min_{\mathbf{S}} \sum_{k=1}^{K} \sum_{x_i \in S_k} \| x_i - \mu_k \|^2 \quad \text{where} \quad \mu_k = \frac{1}{|S_k|} \sum_{x_i \in S_k} x_i"
-            description="WCSS measures the compactness of the clusters. Minimizing WCSS corresponds to finding the maximum likelihood estimate under an isotropic Gaussian mixture assumption."
+            description="Add the squared distance from every point to its cluster centre. Smaller WCSS means more compact clusters."
           />
         </div>
       )}
@@ -109,26 +109,26 @@ export const Step1_Theory = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <PixelCard
               variant="lime"
-              title="Soft Mixture Modeling"
+              title="What it does"
               badge={<PixelBadge variant="lime">PROBABILITY</PixelBadge>}
             >
               <p className="text-xs text-gray-300 leading-relaxed font-sans">
-                Unlike hard assignments in K-Means, Expectation Maximization (EM) computes the posterior probability (responsibility <InlineMath math="\gamma_{ik}" />) that sample <InlineMath math="i" /> was generated by Gaussian component <InlineMath math="k" />.
+                EM fits Gaussian distributions to the data. Each point gets a probability of belonging to each cluster.
               </p>
               <p className="text-xs text-gray-400 leading-relaxed font-sans mt-2">
-                Each component is defined by its mean vector <InlineMath math="\mu_k" />, covariance matrix <InlineMath math="\Sigma_k" /> (modeling cluster orientation and elongation), and mixture weight prior <InlineMath math="\pi_k" />.
+                Each distribution has a centre (mean), a shape (covariance), and a share of the data (weight).
               </p>
             </PixelCard>
 
             <PixelCard
               variant="purple"
-              title="E-Step & M-Step Optimization"
-              badge={<PixelBadge variant="purple">MLE</PixelBadge>}
+              title="How it works"
+              badge={<PixelBadge variant="purple">EM</PixelBadge>}
             >
               <ul className="text-xs text-gray-300 space-y-2 list-disc list-inside font-sans">
-                <li><strong className="text-gray-100">E-Step (Expectation):</strong> Calculate responsibilities <InlineMath math="\gamma_{ik}" /> using Bayes' Rule and the multivariate normal PDF.</li>
-                <li><strong className="text-gray-100">M-Step (Maximization):</strong> Update weights <InlineMath math="\pi_k" />, means <InlineMath math="\mu_k" />, and covariance matrices <InlineMath math="\Sigma_k" /> using the weighted sample moments.</li>
-                <li><strong className="text-gray-100">Convergence:</strong> Guaranteed to monotonically increase the total mixture log-likelihood.</li>
+                <li><strong className="text-gray-100">E-Step (Expectation):</strong> Calculate each point's probability of belonging to each cluster.</li>
+                <li><strong className="text-gray-100">M-Step (Maximization):</strong> Update cluster means, shapes and weights using those probabilities.</li>
+                <li><strong className="text-gray-100">Convergence:</strong> Repeat until the improvement is small or the iteration limit is reached.</li>
               </ul>
             </PixelCard>
           </div>
@@ -136,7 +136,7 @@ export const Step1_Theory = () => {
           <MathBlock
             title="E-Step Responsibilities & M-Step Parameters"
             formula="\gamma_{ik} = \frac{\pi_k \mathcal{N}(x_i \mid \mu_k, \Sigma_k)}{\sum_{j=1}^K \pi_j \mathcal{N}(x_i \mid \mu_j, \Sigma_j)}, \quad \mu_k^{(t+1)} = \frac{\sum_{i} \gamma_{ik} x_i}{\sum_{i} \gamma_{ik}}, \quad \Sigma_k^{(t+1)} = \frac{\sum_{i} \gamma_{ik}(x_i - \mu_k)(x_i - \mu_k)^T}{\sum_{i} \gamma_{ik}}"
-            description="The EM algorithm iteratively finds the Maximum Likelihood Estimates (MLE) of the mixture parameters in the presence of unobserved latent cluster assignments."
+            description="The E-step estimates membership probabilities. The M-step uses them to update each Gaussian distribution."
           />
         </div>
       )}
@@ -147,26 +147,26 @@ export const Step1_Theory = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <PixelCard
               variant="pink"
-              title="Density-Based Reachability"
+              title="What it does"
               badge={<PixelBadge variant="pink">SPATIAL</PixelBadge>}
             >
               <p className="text-xs text-gray-300 leading-relaxed font-sans">
-                DBSCAN (Density-Based Spatial Clustering of Applications with Noise) groups points based on local spatial density. It discovers clusters of arbitrary shapes and isolates low-density outliers as noise.
+                DBSCAN groups points in dense regions and marks isolated points as noise. Clusters can have irregular shapes.
               </p>
               <p className="text-xs text-gray-400 leading-relaxed font-sans mt-2">
-                Two key hyperparameters dictate the clustering behavior: <InlineMath math="\varepsilon" /> (Epsilon neighborhood radius) and <InlineMath math="\text{MinPts}" /> (minimum density threshold).
+                Its two settings are eps (neighbour distance) and minimum points (the density needed to form a cluster).
               </p>
             </PixelCard>
 
             <PixelCard
               variant="purple"
-              title="Point Classification Categories"
-              badge={<PixelBadge variant="purple">TRINARY</PixelBadge>}
+              title="Types of points"
+              badge={<PixelBadge variant="purple">POINT TYPES</PixelBadge>}
             >
               <ul className="text-xs text-gray-300 space-y-2 list-disc list-inside font-sans">
-                <li><strong className="text-emerald-400">Core Point:</strong> Has at least <InlineMath math="\text{MinPts}" /> neighbors within radius <InlineMath math="\varepsilon" /> (<InlineMath math="|N_\varepsilon(p)| \ge \text{MinPts}" />).</li>
-                <li><strong className="text-[#00F0FF]">Border Point:</strong> Has fewer than <InlineMath math="\text{MinPts}" /> neighbors, but is density-reachable from a Core Point.</li>
-                <li><strong className="text-[#FF2E93]">Noise Point:</strong> Neither a Core nor Border point; isolated outlier.</li>
+                <li><strong className="text-emerald-400">Core Point:</strong> Has enough points within eps, counting itself.</li>
+                <li><strong className="text-[#00F0FF]">Border Point:</strong> Has too few neighbours to be core, but is within eps of a core point.</li>
+                <li><strong className="text-[#FF2E93]">Noise Point:</strong> Does not belong to any cluster.</li>
               </ul>
             </PixelCard>
           </div>
@@ -174,7 +174,7 @@ export const Step1_Theory = () => {
           <MathBlock
             title="DBSCAN Density Reachability Condition"
             formula="N_\varepsilon(p) = \{q \in D \mid \text{dist}(p, q) \le \varepsilon\}, \quad p \in \text{Core} \iff |N_\varepsilon(p)| \ge \text{MinPts}"
-            description="Clusters are formed as maximal sets of density-connected points. DBSCAN does not require pre-specifying the number of clusters $K$."
+            description="eps defines the neighbourhood. MinPts defines a core point. DBSCAN finds the number of clusters automatically."
           />
         </div>
       )}

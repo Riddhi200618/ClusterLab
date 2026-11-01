@@ -194,7 +194,7 @@ export const PlotlyWrapper = ({
     const is3D = show3D && points[0] && points[0].length >= 3;
 
     return {
-      title: title ? { text: title, font: { color: '#F3F4F6', size: 13, family: 'Silkscreen, monospace' } } : undefined,
+      title: title ? { text: title, font: { color: '#F3F4F6', size: 13, family: 'Inter, system-ui, sans-serif' } } : undefined,
       autosize: true,
       height,
       margin: { l: 45, r: 25, t: title ? 35 : 20, b: 45 },

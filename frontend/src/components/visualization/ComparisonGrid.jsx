@@ -47,10 +47,10 @@ export const ComparisonGrid = ({ comparisonResult }) => {
               <PixelCrown className="w-5 h-5 text-yellow-400" />
             </div>
             <div>
-              <div className="font-['Press_Start_2P'] text-[9px] text-yellow-400 uppercase">
+              <div className="font-sans text-[9px] text-yellow-400 normal-case">
                 BEST PERFORMING ALGORITHM
               </div>
-              <div className="font-['Silkscreen'] text-base sm:text-lg font-bold text-white uppercase tracking-wider mt-0.5">
+              <div className="font-sans text-base sm:text-lg font-bold text-white normal-case tracking-normal mt-0.5">
                 {winner_algorithm} on {dataset_slug ? dataset_slug.replace('synthetic_', '').replace('_', ' ') : 'Dataset'}
               </div>
             </div>
@@ -68,14 +68,14 @@ export const ComparisonGrid = ({ comparisonResult }) => {
 
       {/* Explicit Selection Rule & Metric Criteria Banner */}
       <div className="p-3.5 sm:p-4 border border-[#20133A] bg-[#0E091C] space-y-2.5">
-        <div className="flex items-center space-x-2 text-xs font-['Silkscreen'] text-[#00F0FF] uppercase font-bold">
+        <div className="flex items-center space-x-2 text-xs font-sans text-[#00F0FF] normal-case font-bold">
           <ShieldCheck className="w-4 h-4 text-[#00F0FF]" />
           <span>Algorithm Selection Rule & Optimization Criteria</span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs font-sans">
           <div className="p-2.5 border border-[#20133A] bg-[#120B24] space-y-1">
-            <div className="flex items-center space-x-1.5 font-['Silkscreen'] text-[11px] text-[#00F0FF] font-bold">
+            <div className="flex items-center space-x-1.5 font-sans text-[11px] text-[#00F0FF] font-bold">
               <ArrowUpRight className="w-3.5 h-3.5" />
               <span>1. Silhouette Score</span>
             </div>
@@ -85,7 +85,7 @@ export const ComparisonGrid = ({ comparisonResult }) => {
           </div>
 
           <div className="p-2.5 border border-[#20133A] bg-[#120B24] space-y-1">
-            <div className="flex items-center space-x-1.5 font-['Silkscreen'] text-[11px] text-[#D8B4FE] font-bold">
+            <div className="flex items-center space-x-1.5 font-sans text-[11px] text-[#D8B4FE] font-bold">
               <ArrowDownRight className="w-3.5 h-3.5" />
               <span>2. Davies-Bouldin Index</span>
             </div>
@@ -95,7 +95,7 @@ export const ComparisonGrid = ({ comparisonResult }) => {
           </div>
 
           <div className="p-2.5 border border-[#20133A] bg-[#120B24] space-y-1">
-            <div className="flex items-center space-x-1.5 font-['Silkscreen'] text-[11px] text-[#39FF14] font-bold">
+            <div className="flex items-center space-x-1.5 font-sans text-[11px] text-[#39FF14] font-bold">
               <Layers className="w-3.5 h-3.5" />
               <span>3. Topology Rule</span>
             </div>
@@ -109,7 +109,7 @@ export const ComparisonGrid = ({ comparisonResult }) => {
       {/* Comparison Scorecard Table */}
       <div className="overflow-x-auto border border-[#20133A] bg-[#0E091C] shadow-sm">
         <table className="w-full text-left text-xs">
-          <thead className="bg-[#080512] text-gray-400 font-['Silkscreen'] uppercase border-b border-[#20133A]">
+          <thead className="bg-[#080512] text-gray-400 font-sans normal-case border-b border-[#20133A]">
             <tr>
               <th className="px-4 py-2.5">ALGORITHM</th>
               <th className="px-4 py-3">
@@ -129,7 +129,7 @@ export const ComparisonGrid = ({ comparisonResult }) => {
               <th className="px-4 py-3">RUNTIME</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#1D1036] font-mono text-xs">
+          <tbody className="divide-y divide-[#1D1036] font-sans text-xs">
             {comparison_table.map((row) => {
               const isWinner = row.algorithm_type === winner_algorithm;
               const isBestSil = row.silhouette_score !== null && row.silhouette_score === bestMetrics.maxSil;
@@ -147,11 +147,11 @@ export const ComparisonGrid = ({ comparisonResult }) => {
                 >
                   <td className="px-4 py-3 font-sans font-bold text-gray-200 flex items-center space-x-2">
                     {isWinner && (
-                      <span className="text-yellow-400 font-['Press_Start_2P'] text-[9px]">★</span>
+                      <span className="text-yellow-400 font-sans text-[9px]">★</span>
                     )}
-                    <span className="font-['Silkscreen'] text-white">{row.algorithm_name}</span>
+                    <span className="font-sans text-white">{row.algorithm_name}</span>
                     {isWinner && (
-                      <span className="px-1.5 py-0.2 text-[8px] font-['Press_Start_2P'] bg-yellow-400/20 text-yellow-300 border border-yellow-400/40">
+                      <span className="px-1.5 py-0.2 text-[8px] font-sans bg-yellow-400/20 text-yellow-300 border border-yellow-400/40">
                         BEST MODEL
                       </span>
                     )}

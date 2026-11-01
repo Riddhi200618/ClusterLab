@@ -95,11 +95,11 @@ export const LabStepper = ({ onStepClick }) => {
         {/* Top Status HUD: Stage & Step Indicators + Prev / Next */}
         <div className="flex items-center justify-between gap-2 border-b border-[#1E1136] pb-1.5 text-xs">
           <div className="flex items-center space-x-2 min-w-0 flex-1">
-            <span className="font-['Press_Start_2P'] text-[10px] text-[#00F0FF] flex-shrink-0">
+            <span className="font-sans text-[10px] text-[#00F0FF] flex-shrink-0">
               STAGE {activeStage.stageNum}/5
             </span>
-            <span className="text-gray-500 font-mono hidden sm:inline flex-shrink-0">::</span>
-            <span className="font-['Silkscreen'] font-bold text-white uppercase tracking-wider truncate">
+            <span className="text-gray-500 font-sans hidden sm:inline flex-shrink-0">::</span>
+            <span className="font-sans font-bold text-white normal-case tracking-normal truncate">
               {activeStage.title}
             </span>
             <span className="text-[11px] text-gray-400 hidden md:inline font-sans truncate">
@@ -112,21 +112,21 @@ export const LabStepper = ({ onStepClick }) => {
             <button
               onClick={prevStep}
               disabled={currentStep <= 1}
-              className="flex items-center space-x-1 px-2.5 py-1 text-[10px] font-['Silkscreen'] uppercase font-bold text-gray-300 hover:text-white bg-[#120B24] hover:bg-[#1A1033] border border-[#2B184C] disabled:opacity-30 disabled:pointer-events-none shadow-sm transition-all"
+              className="flex items-center space-x-1 px-2.5 py-1 text-[10px] font-sans normal-case font-bold text-gray-300 hover:text-white bg-[#120B24] hover:bg-[#1A1033] border border-[#2B184C] disabled:opacity-30 disabled:pointer-events-none shadow-sm transition-all"
               title="Previous Step"
             >
               <ChevronLeft className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">PREV</span>
             </button>
 
-            <span className="font-['Press_Start_2P'] text-[9px] text-[#FF2E93] px-1">
+            <span className="font-sans text-[9px] text-[#FF2E93] px-1">
               STEP {currentStep}/11
             </span>
 
             <button
               onClick={nextStep}
               disabled={currentStep >= 11}
-              className="flex items-center space-x-1 px-2.5 py-1 text-[10px] font-['Silkscreen'] uppercase font-bold text-[#050510] hover:text-black bg-[#00F0FF] hover:bg-[#38BDF8] border border-[#6EE7B7] shadow-sm disabled:opacity-30 disabled:pointer-events-none transition-all"
+              className="flex items-center space-x-1 px-2.5 py-1 text-[10px] font-sans normal-case font-bold text-[#050510] hover:text-black bg-[#00F0FF] hover:bg-[#38BDF8] border border-[#6EE7B7] shadow-sm disabled:opacity-30 disabled:pointer-events-none transition-all"
               title="Next Step"
             >
               <span className="hidden sm:inline">NEXT</span>
@@ -156,7 +156,7 @@ export const LabStepper = ({ onStepClick }) => {
                 }`}
               >
                 <div
-                  className={`w-4 h-4 flex items-center justify-center font-['Press_Start_2P'] text-[8px] flex-shrink-0 ${
+                  className={`w-4 h-4 flex items-center justify-center font-sans text-[8px] flex-shrink-0 ${
                     isStageActive
                       ? 'text-[#00F0FF]'
                       : isStageCompleted
@@ -173,7 +173,7 @@ export const LabStepper = ({ onStepClick }) => {
 
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center space-x-1">
-                    <span className="font-['Silkscreen'] text-[11px] font-bold truncate">
+                    <span className="font-sans text-[11px] font-bold truncate">
                       {stage.title}
                     </span>
                   </div>
@@ -189,7 +189,7 @@ export const LabStepper = ({ onStepClick }) => {
         {/* Sub-Step Navigation for Multi-Step Stages */}
         {activeStage.steps.length > 1 && (
           <div className="flex items-center space-x-1.5 pt-1 border-t border-[#1E1136] overflow-x-auto">
-            <span className="text-[10px] font-mono text-gray-400 uppercase hidden sm:inline flex-shrink-0">
+            <span className="text-[10px] font-sans text-gray-400 normal-case hidden sm:inline flex-shrink-0">
               Stage {activeStage.stageNum} Steps:
             </span>
             {activeStage.steps.map((st, idx) => {
@@ -201,7 +201,7 @@ export const LabStepper = ({ onStepClick }) => {
                   key={st.id}
                   onClick={() => handleSelectSubStep(st.id)}
                   title={st.label}
-                  className={`px-2 py-0.5 text-[10px] font-['Silkscreen'] uppercase border transition-all flex items-center space-x-1 flex-shrink-0 shadow-sm ${
+                  className={`px-2 py-0.5 text-[10px] font-sans normal-case border transition-all flex items-center space-x-1 flex-shrink-0 shadow-sm ${
                     isStepActive
                       ? 'bg-[#00F0FF]/10 border-[#00F0FF]/80 text-white'
                       : isStepDone

@@ -23,11 +23,11 @@ export const Navbar = ({ onToggleWelcome, showWelcome }) => {
           </div>
           <div>
             <div className="flex items-center space-x-2">
-              <span className="font-['Press_Start_2P'] text-xs sm:text-sm text-white tracking-wide">
+              <span className="font-sans text-xs sm:text-sm text-white tracking-normal">
                 CLUSTER<span className="text-[#00F0FF]">LAB</span>
               </span>
             </div>
-            <p className="font-['Silkscreen'] text-[9px] text-gray-400 hidden sm:block">
+            <p className="font-sans text-[9px] text-gray-400 hidden sm:block">
               VIRTUAL MACHINE LEARNING LABORATORY
             </p>
           </div>
@@ -37,16 +37,16 @@ export const Navbar = ({ onToggleWelcome, showWelcome }) => {
         <div className="hidden lg:flex items-center space-x-3 text-xs">
           <div className="px-2.5 py-1 border border-[#231542] bg-[#0E091C] flex items-center space-x-2 shadow-sm">
             <Database className="w-3.5 h-3.5 text-[#00F0FF]" />
-            <span className="font-['Silkscreen'] text-[10px] text-gray-400">DATASET:</span>
-            <span className="font-mono text-[11px] font-semibold text-white uppercase">
+            <span className="font-sans text-[10px] text-gray-400">DATASET:</span>
+            <span className="font-sans text-[11px] font-semibold text-white normal-case">
               {selectedDatasetSlug ? selectedDatasetSlug.replace('synthetic_', '') : 'IRIS'}
             </span>
           </div>
 
           <div className="px-2.5 py-1 border border-[#231542] bg-[#0E091C] flex items-center space-x-2 shadow-sm">
             <Cpu className="w-3.5 h-3.5 text-[#FF2E93]" />
-            <span className="font-['Silkscreen'] text-[10px] text-gray-400">ALGORITHM:</span>
-            <span className="font-mono text-[11px] font-semibold text-[#FF2E93] uppercase">
+            <span className="font-sans text-[10px] text-gray-400">ALGORITHM:</span>
+            <span className="font-sans text-[11px] font-semibold text-[#FF2E93] normal-case">
               {selectedAlgorithm}
             </span>
           </div>
@@ -56,7 +56,7 @@ export const Navbar = ({ onToggleWelcome, showWelcome }) => {
         <div className="flex items-center space-x-2 sm:space-x-3">
           <button
             onClick={() => onToggleWelcome && onToggleWelcome(!showWelcome)}
-            className="flex items-center space-x-1.5 px-2.5 py-1 text-xs font-['Silkscreen'] font-bold text-gray-300 hover:text-white bg-[#120B24] hover:bg-[#1C1236] border border-[#2B184C] shadow-sm transition-all"
+            className="flex items-center space-x-1.5 px-2.5 py-1 text-xs font-sans font-bold text-gray-300 hover:text-white bg-[#120B24] hover:bg-[#1C1236] border border-[#2B184C] shadow-sm transition-all"
             title="Toggle Overview Screen"
           >
             <Home className="w-3.5 h-3.5 text-cyan-400" />
@@ -68,7 +68,7 @@ export const Navbar = ({ onToggleWelcome, showWelcome }) => {
               if (onToggleWelcome) onToggleWelcome(false);
               goToStep(1);
             }}
-            className="flex items-center space-x-1.5 px-2.5 py-1 text-xs font-['Silkscreen'] font-bold text-gray-300 hover:text-white bg-[#120B24] hover:bg-[#1C1236] border border-[#2B184C] shadow-sm transition-all"
+            className="flex items-center space-x-1.5 px-2.5 py-1 text-xs font-sans font-bold text-gray-300 hover:text-white bg-[#120B24] hover:bg-[#1C1236] border border-[#2B184C] shadow-sm transition-all"
             title="Reset to Stage 1 (Learn)"
           >
             <RotateCcw className="w-3.5 h-3.5 text-amber-400" />
@@ -80,7 +80,7 @@ export const Navbar = ({ onToggleWelcome, showWelcome }) => {
               if (onToggleWelcome) onToggleWelcome(false);
               goToStep(11);
             }}
-            className="flex items-center space-x-1.5 px-2.5 py-1 text-xs font-['Silkscreen'] font-bold text-[#00F0FF] hover:text-white bg-[#0B1528] hover:bg-[#101F3B] border border-[#00F0FF]/50 shadow-sm transition-all"
+            className="flex items-center space-x-1.5 px-2.5 py-1 text-xs font-sans font-bold text-[#00F0FF] hover:text-white bg-[#0B1528] hover:bg-[#101F3B] border border-[#00F0FF]/50 shadow-sm transition-all"
             title="Open Experiment Report (Stage 5)"
           >
             <Clock className="w-3.5 h-3.5" />

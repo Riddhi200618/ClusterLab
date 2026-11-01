@@ -55,7 +55,7 @@ const LabContent = () => {
           {/* Global Error Banner */}
           {error && (
             <div className="max-w-5xl mx-auto w-full px-4 mt-4 no-print">
-              <div className="p-3 border border-[#FF2E93]/60 bg-[#1A0813] text-[#FFA1CE] shadow-sm flex items-center justify-between text-xs font-mono">
+              <div className="p-3 border border-[#FF2E93]/60 bg-[#1A0813] text-[#FFA1CE] shadow-sm flex items-center justify-between text-xs font-sans">
                 <div className="flex items-center space-x-2">
                   <ShieldAlert className="w-4 h-4 flex-shrink-0 text-[#FF2E93]" />
                   <span>ERROR: {error}</span>
@@ -82,15 +82,15 @@ const LabContent = () => {
       <footer className="border-t border-[#1C1032] py-4 bg-[#080512] text-xs text-gray-400">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
           <div className="flex items-center space-x-2">
-            <span className="font-['Silkscreen'] font-bold text-gray-300">
+            <span className="font-sans font-bold text-gray-300">
               CLUSTER<span className="text-[#00F0FF]">LAB</span> © 2026
             </span>
             <span className="text-gray-600">•</span>
-            <span className="text-[11px] text-gray-400 font-mono">
+            <span className="text-[11px] text-gray-400 font-sans">
               VIRTUAL MACHINE LEARNING LABORATORY • EDUCATIONAL VIVA EDITION
             </span>
           </div>
-          <div className="flex items-center space-x-3 text-[10px] font-mono text-gray-400">
+          <div className="flex items-center space-x-3 text-[10px] font-sans text-gray-400">
             <span className="text-[#00F0FF]">K-MEANS</span>
             <span className="text-gray-700">/</span>
             <span className="text-[#39FF14]">EM-GMM</span>
@@ -100,6 +100,9 @@ const LabContent = () => {
             <span className="text-amber-400">SILHOUETTE</span>
           </div>
         </div>
+        <p className="mt-3 px-4 text-center text-xs font-sans text-gray-400">
+          Created by Riddhi Tamhankar and Niharika Pawar
+        </p>
       </footer>
     </div>
   );

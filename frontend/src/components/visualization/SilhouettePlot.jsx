@@ -67,7 +67,7 @@ export const SilhouettePlot = ({ silhouetteData, height = 400 }) => {
     return {
       title: {
         text: `Silhouette Profiles (Global Mean: ${overall_score !== null ? overall_score.toFixed(3) : 'N/A'})`,
-        font: { color: '#F3F4F6', size: 13, family: 'Silkscreen, monospace' },
+        font: { color: '#F3F4F6', size: 13, family: 'Inter, system-ui, sans-serif' },
       },
       autosize: true,
       height,
@@ -118,7 +118,7 @@ export const SilhouettePlot = ({ silhouetteData, height = 400 }) => {
 
   if (!hasData) {
     return (
-      <div className="border border-[#231542] bg-[#0E091C] p-8 text-center text-gray-400 font-mono shadow-sm">
+      <div className="border border-[#231542] bg-[#0E091C] p-8 text-center text-gray-400 font-sans shadow-sm">
         <p className="text-[#00F0FF] text-sm">EVALUATION METRICS PENDING CALCULATION...</p>
       </div>
     );
@@ -141,7 +141,7 @@ export const SilhouettePlot = ({ silhouetteData, height = 400 }) => {
       <div className="border border-[#00F0FF]/30 bg-[#0A1020] p-4 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div>
           <div className="flex items-center space-x-2">
-            <span className="font-mono text-xs font-semibold text-[#00F0FF]">
+            <span className="font-sans text-xs font-semibold text-[#00F0FF]">
               EVALUATION VERDICT:
             </span>
             <PixelBadge variant="cyan">{verdict || 'ANALYSIS COMPLETE'}</PixelBadge>

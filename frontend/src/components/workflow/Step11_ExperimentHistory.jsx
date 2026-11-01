@@ -52,14 +52,14 @@ export const Step11_ExperimentHistory = () => {
           </div>
           <div>
             <div className="flex items-center space-x-2">
-              <span className="font-['Press_Start_2P'] text-[10px] text-[#00F0FF]">STAGE 5</span>
-              <h1 className="font-['Silkscreen'] text-base sm:text-lg font-bold text-white uppercase tracking-wider">
+              <span className="font-sans text-[10px] text-[#00F0FF]">STAGE 5</span>
+              <h1 className="font-sans text-base sm:text-lg font-bold text-white normal-case tracking-normal">
                 Experiment History & Report
               </h1>
             </div>
             <p className="text-xs text-gray-300 mt-0.5 font-sans">
-              Review saved laboratory runs persisted in the database and export the evaluation report as a printable PDF.
-            </p>
+                Review your experiment and saved results.
+              </p>
           </div>
         </div>
 
@@ -83,14 +83,14 @@ export const Step11_ExperimentHistory = () => {
       <div className="hidden print:block mb-6 border-b-2 border-gray-800 pb-4">
         <div className="flex justify-between items-start">
           <div>
-            <h1 className="text-xl font-bold tracking-tight text-black uppercase">
+            <h1 className="text-xl font-bold tracking-tight text-black normal-case">
               ClusterLab — Machine Learning Virtual Laboratory
             </h1>
             <p className="text-sm font-semibold text-gray-700 mt-0.5">
               Official Student Laboratory Experiment Dossier & Evaluation Report
             </p>
           </div>
-          <div className="text-right text-xs font-mono text-gray-600">
+          <div className="text-right text-xs font-sans text-gray-600">
             <div>Printed: {printedAt}</div>
             <div>Student Account: guest_student</div>
           </div>
@@ -103,26 +103,26 @@ export const Step11_ExperimentHistory = () => {
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 pb-2.5 border-b border-[#00F0FF]/20">
             <div className="flex items-center space-x-2">
               <FileText className="w-5 h-5 text-[#00F0FF] print:text-black" />
-              <h2 className="font-['Silkscreen'] print:font-sans print:font-bold text-sm sm:text-base font-bold text-white print:text-black uppercase tracking-wide">
+              <h2 className="font-sans print:font-sans print:font-bold text-sm sm:text-base font-bold text-white print:text-black normal-case tracking-normal">
                 Virtual Lab Experiment Dossier
               </h2>
             </div>
-            <span className="font-mono text-xs text-gray-400 print:text-gray-700">
+            <span className="font-sans text-xs text-gray-400 print:text-gray-700">
               SESSION ID: <strong className="text-cyan-300 print:text-black">{activeExperiment.session_id}</strong>
             </span>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-mono">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-sans">
             <div className="border border-[#20133A] print:border-gray-300 bg-[#080512] print:bg-gray-50 p-2.5">
-              <span className="text-gray-400 print:text-gray-600 block font-['Silkscreen'] print:font-sans text-[9px] uppercase">
+              <span className="text-gray-400 print:text-gray-600 block font-sans print:font-sans text-[9px] normal-case">
                 DATASET:
               </span>
-              <span className="font-bold text-gray-200 print:text-black uppercase mt-0.5 block truncate">
+              <span className="font-bold text-gray-200 print:text-black normal-case mt-0.5 block truncate">
                 {selectedDatasetSlug ? selectedDatasetSlug.replace('synthetic_', '').replace('_', ' ') : 'IRIS'}
               </span>
             </div>
             <div className="border border-[#20133A] print:border-gray-300 bg-[#080512] print:bg-gray-50 p-2.5">
-              <span className="text-gray-400 print:text-gray-600 block font-['Silkscreen'] print:font-sans text-[9px] uppercase">
+              <span className="text-gray-400 print:text-gray-600 block font-sans print:font-sans text-[9px] normal-case">
                 LOADED FEATURES:
               </span>
               <span className="font-bold text-gray-200 print:text-black mt-0.5 block truncate">
@@ -130,33 +130,33 @@ export const Step11_ExperimentHistory = () => {
               </span>
             </div>
             <div className="border border-[#20133A] print:border-gray-300 bg-[#080512] print:bg-gray-50 p-2.5">
-              <span className="text-gray-400 print:text-gray-600 block font-['Silkscreen'] print:font-sans text-[9px] uppercase">
+              <span className="text-gray-400 print:text-gray-600 block font-sans print:font-sans text-[9px] normal-case">
                 NORMALIZATION:
               </span>
-              <span className="font-bold text-gray-200 print:text-black uppercase mt-0.5 block">
+              <span className="font-bold text-gray-200 print:text-black normal-case mt-0.5 block">
                 {activeExperiment.scaling_method}
               </span>
             </div>
             <div className="border border-[#20133A] print:border-gray-300 bg-[#080512] print:bg-gray-50 p-2.5">
-              <span className="text-gray-400 print:text-gray-600 block font-['Silkscreen'] print:font-sans text-[9px] uppercase">
+              <span className="text-gray-400 print:text-gray-600 block font-sans print:font-sans text-[9px] normal-case">
                 PARADIGM:
               </span>
-              <span className="font-bold text-[#00F0FF] print:text-black uppercase mt-0.5 block">
+              <span className="font-bold text-[#00F0FF] print:text-black normal-case mt-0.5 block">
                 {selectedAlgorithm}
               </span>
             </div>
           </div>
 
           {/* Hyperparameters Line */}
-          <div className="text-xs font-mono p-2 bg-[#080512] print:bg-gray-100 border border-[#20133A] print:border-gray-300 flex items-center justify-between">
+          <div className="text-xs font-sans p-2 bg-[#080512] print:bg-gray-100 border border-[#20133A] print:border-gray-300 flex items-center justify-between">
             <span className="text-gray-400 print:text-gray-600">Configuration Parameters:</span>
             <span className="text-yellow-300 print:text-black font-semibold">{getParamsSummary()}</span>
           </div>
 
           {/* Quantitative Metrics Summary Table */}
           <div className="overflow-x-auto border border-[#1E1136] print:border-gray-300 bg-[#07040E] print:bg-white mt-3">
-            <table className="w-full text-left text-xs font-mono">
-              <thead className="text-gray-400 print:text-black uppercase bg-[#090514] print:bg-gray-100 font-['Silkscreen'] print:font-sans border-b border-[#1E1136] print:border-gray-300">
+            <table className="w-full text-left text-xs font-sans">
+              <thead className="text-gray-400 print:text-black normal-case bg-[#090514] print:bg-gray-100 font-sans print:font-sans border-b border-[#1E1136] print:border-gray-300">
                 <tr>
                   <th className="px-3 py-2">SILHOUETTE (↑)</th>
                   <th className="px-3 py-2">DAVIES-BOULDIN (↓)</th>
@@ -195,8 +195,8 @@ export const Step11_ExperimentHistory = () => {
         </div>
       ) : (
         <div className="no-print border border-[#20133A] bg-[#0E091C] p-6 text-center text-gray-400 space-y-2">
-          <p className="font-['Silkscreen'] text-xs">NO ACTIVE EXPERIMENT IN PROGRESS</p>
-          <p className="text-xs font-sans text-gray-500">Launch a simulation in Step 06 or Step 07 to record live dossier metrics.</p>
+          <p className="font-sans text-xs">NO ACTIVE EXPERIMENT IN PROGRESS</p>
+          <p className="text-xs font-sans text-gray-500">Run an algorithm in Step 6 or 7 to see your results here.</p>
         </div>
       )}
 
@@ -204,7 +204,7 @@ export const Step11_ExperimentHistory = () => {
       <div className="print-card border border-[#20133A] bg-[#0E091C] p-4 sm:p-5 shadow-sm space-y-4 break-inside-avoid">
         <div className="flex items-center space-x-2 pb-2.5 border-b border-[#1E1136] print:border-gray-300">
           <Database className="w-4 h-4 text-[#00F0FF] print:text-black" />
-          <h3 className="font-['Silkscreen'] print:font-sans print:font-bold text-xs font-bold text-white print:text-black uppercase tracking-wider">
+          <h3 className="font-sans print:font-sans print:font-bold text-xs font-bold text-white print:text-black normal-case tracking-normal">
             Saved Experiments Database Archive ({historyList.length} Sessions Recorded)
           </h3>
         </div>
@@ -218,21 +218,21 @@ export const Step11_ExperimentHistory = () => {
               >
                 <div>
                   <div className="flex items-center space-x-2">
-                    <h4 className="font-['Silkscreen'] print:font-sans font-bold text-xs text-white print:text-black">
+                    <h4 className="font-sans print:font-sans font-bold text-xs text-white print:text-black">
                       {exp.title}
                     </h4>
-                    <span className="px-2 py-0.5 text-[10px] font-mono border border-[#00F0FF]/40 print:border-gray-400 bg-[#00F0FF]/10 print:bg-gray-100 text-[#00F0FF] print:text-black uppercase font-bold">
+                    <span className="px-2 py-0.5 text-[10px] font-sans border border-[#00F0FF]/40 print:border-gray-400 bg-[#00F0FF]/10 print:bg-gray-100 text-[#00F0FF] print:text-black normal-case font-bold">
                       {exp.dataset_slug}
                     </span>
                   </div>
-                  <div className="text-[11px] text-gray-400 print:text-gray-600 mt-1 font-mono">
+                  <div className="text-[11px] text-gray-400 print:text-gray-600 mt-1 font-sans">
                     Features: {exp.selected_features?.join(', ')} • Scaling: {exp.scaling_method} •{' '}
                     {new Date(exp.created_at).toLocaleDateString()} {new Date(exp.created_at).toLocaleTimeString()}
                   </div>
                 </div>
 
                 <div className="flex items-center space-x-3">
-                  <span className="text-[11px] text-[#39FF14] print:text-emerald-800 font-mono font-bold">
+                  <span className="text-[11px] text-[#39FF14] print:text-emerald-800 font-sans font-bold">
                     {exp.experiment_runs?.length || 0} RUNS RECORDED
                   </span>
                 </div>
@@ -240,7 +240,7 @@ export const Step11_ExperimentHistory = () => {
             ))}
           </div>
         ) : (
-          <div className="text-center py-6 text-gray-500 text-xs font-['Silkscreen'] print:font-sans">
+          <div className="text-center py-6 text-gray-500 text-xs font-sans print:font-sans">
             NO PRIOR EXPERIMENT RECORDS IN DATABASE ARCHIVE.
           </div>
         )}

@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-  --font-pixel: 'Press Start 2P', monospace;
-  --font-arcade: 'Silkscreen', 'Press Start 2P', monospace;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-pixel: 'Inter', system-ui, sans-serif;
+  --font-arcade: 'Inter', system-ui, sans-serif;
+  --font-mono: 'Inter', system-ui, sans-serif;
   --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
   --color-retro-bg: #07050E;
@@ -101,10 +101,10 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Silkscreen', 'Press Start 2P', monospace;
+  font-family: 'Inter', system-ui, sans-serif;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
+  text-transform: none;
+  letter-spacing: normal;
   padding: 0.5rem 1rem;
   border: 1px solid;
   transition: all 0.1s ease;

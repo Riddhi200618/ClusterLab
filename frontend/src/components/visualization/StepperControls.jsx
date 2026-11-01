@@ -67,13 +67,13 @@ export const StepperControls = () => {
           <PixelBadge variant="cyan">
             FRAME {currentStepIndex + 1} / {totalSteps}
           </PixelBadge>
-          <span className="font-['Silkscreen'] text-xs font-bold text-white tracking-wide truncate">
+          <span className="font-sans text-xs font-bold text-white tracking-normal truncate">
             {currentStepData.phase_name || `Phase: ${currentStepData.phase}`}
           </span>
         </div>
 
         {/* Phase Type Badge */}
-        <div className="flex items-center space-x-2 text-xs font-mono">
+        <div className="flex items-center space-x-2 text-xs font-sans">
           {currentStepData.converged && (
             <PixelBadge variant="lime">
               CONVERGED
@@ -105,7 +105,7 @@ export const StepperControls = () => {
           }}
           className="w-full h-2 bg-[#090514] appearance-none cursor-pointer accent-[#00F0FF]"
         />
-        <div className="flex justify-between text-[10px] text-gray-500 font-mono mt-1">
+        <div className="flex justify-between text-[10px] text-gray-500 font-sans mt-1">
           <span>FRAME 01 (INIT)</span>
           <span className="text-yellow-400 font-bold">ITERATION {currentStepData.iteration || 0}</span>
           <span>FRAME {totalSteps} (FINAL)</span>
@@ -136,7 +136,7 @@ export const StepperControls = () => {
 
           <button
             onClick={handlePlayPause}
-            className={`flex items-center space-x-1.5 px-4 py-1.5 border font-['Silkscreen'] font-bold text-xs uppercase shadow-sm transition-all ${
+            className={`flex items-center space-x-1.5 px-4 py-1.5 border font-sans font-bold text-xs normal-case shadow-sm transition-all ${
               isPlaying
                 ? 'border-[#FFE600] bg-[#FFE600] text-[#1A1400]'
                 : 'border-[#00F0FF] bg-[#00F0FF] text-[#050510] hover:bg-[#38BDF8]'
@@ -167,7 +167,7 @@ export const StepperControls = () => {
 
         {/* Playback Speed Controls */}
         <div className="flex items-center space-x-1 border border-[#20133A] bg-[#0A0617] p-0.5">
-          <span className="text-[10px] font-['Silkscreen'] text-gray-400 px-1.5 font-bold flex items-center space-x-1">
+          <span className="text-[10px] font-sans text-gray-400 px-1.5 font-bold flex items-center space-x-1">
             <Gauge className="w-3 h-3 text-[#00F0FF]" />
             <span>SPEED:</span>
           </span>
@@ -175,7 +175,7 @@ export const StepperControls = () => {
             <button
               key={speed}
               onClick={() => setPlaybackSpeed(speed)}
-              className={`px-2 py-0.5 text-[10px] font-mono font-bold transition-all border ${
+              className={`px-2 py-0.5 text-[10px] font-sans font-bold transition-all border ${
                 playbackSpeed === speed
                   ? 'border-[#00F0FF] bg-[#00F0FF] text-[#050510]'
                   : 'border-transparent text-gray-400 hover:text-white hover:bg-[#140E29]'

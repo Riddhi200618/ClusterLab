@@ -28,7 +28,7 @@ export const Step8_InteractiveViz = () => {
   if (!simulationResult) {
     return (
       <div className="max-w-4xl mx-auto py-8 space-y-6">
-        <div className="p-6 sm:p-8 border border-[#20133A] bg-[#0E091C] shadow-sm text-center space-y-4 font-['Silkscreen']">
+        <div className="p-6 sm:p-8 border border-[#20133A] bg-[#0E091C] shadow-sm text-center space-y-4 font-sans">
           <p className="text-[#00F0FF] text-sm">
             MANIFOLD VISUALIZATION PENDING SIMULATION...
           </p>
@@ -68,14 +68,14 @@ export const Step8_InteractiveViz = () => {
           </div>
           <div>
             <div className="flex items-center space-x-2">
-              <span className="font-['Press_Start_2P'] text-[10px] text-[#00F0FF]">STAGE 4</span>
-              <h1 className="font-['Silkscreen'] text-base sm:text-lg font-bold text-white uppercase tracking-wider">
+              <span className="font-sans text-[10px] text-[#00F0FF]">STAGE 4</span>
+              <h1 className="font-sans text-base sm:text-lg font-bold text-white normal-case tracking-normal">
                 Cluster Visualization
               </h1>
             </div>
             <p className="text-xs text-gray-300 mt-0.5 font-sans">
-              Interactive spatial visualization of final cluster assignments, density partitions, and separation boundaries.
-            </p>
+                View the final clusters and noise points.
+              </p>
           </div>
         </div>
 
@@ -100,29 +100,29 @@ export const Step8_InteractiveViz = () => {
       {/* Cluster Distribution Scorecards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <div className="p-3 border border-[#20133A] bg-[#0E091C] shadow-sm">
-          <span className="font-['Silkscreen'] text-[10px] text-gray-400">CLUSTERS FOUND:</span>
-          <div className="font-mono text-base font-bold text-[#00F0FF] mt-0.5">
+          <span className="font-sans text-[10px] text-gray-400">CLUSTERS FOUND:</span>
+          <div className="font-sans text-base font-bold text-[#00F0FF] mt-0.5">
             {metrics.num_clusters || 0}
           </div>
         </div>
 
         <div className="p-3 border border-[#20133A] bg-[#0E091C] shadow-sm">
-          <span className="font-['Silkscreen'] text-[10px] text-gray-400">RUNTIME (MS):</span>
-          <div className="font-mono text-base font-bold text-[#39FF14] mt-0.5">
+          <span className="font-sans text-[10px] text-gray-400">RUNTIME (MS):</span>
+          <div className="font-sans text-base font-bold text-[#39FF14] mt-0.5">
             {simulationResult?.execution_time_ms ? `${simulationResult.execution_time_ms}` : '0'}
           </div>
         </div>
 
         <div className="p-3 border border-[#20133A] bg-[#0E091C] shadow-sm">
-          <span className="font-['Silkscreen'] text-[10px] text-gray-400">NOISE POINTS:</span>
-          <div className="font-mono text-base font-bold text-[#FF2E93] mt-0.5">
+          <span className="font-sans text-[10px] text-gray-400">NOISE POINTS:</span>
+          <div className="font-sans text-base font-bold text-[#FF2E93] mt-0.5">
             {metrics.num_noise_points || 0}
           </div>
         </div>
 
         <div className="p-3 border border-[#20133A] bg-[#0E091C] shadow-sm">
-          <span className="font-['Silkscreen'] text-[10px] text-gray-400">STATUS:</span>
-          <div className="font-mono text-xs font-bold text-yellow-400 mt-1">
+          <span className="font-sans text-[10px] text-gray-400">STATUS:</span>
+          <div className="font-sans text-xs font-bold text-yellow-400 mt-1">
             {simulationResult?.converged ? 'CONVERGED' : 'COMPLETED'}
           </div>
         </div>

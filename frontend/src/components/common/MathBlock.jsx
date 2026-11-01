@@ -75,7 +75,7 @@ export const MathBlock = ({ formula, title = 'Mathematical Formulation', descrip
 
   return (
     <div className="border border-[#231542] bg-[#0C081A] p-4 shadow-sm relative">
-      <div className="flex items-center space-x-2 text-cyan-300 text-xs font-['Silkscreen'] uppercase tracking-wide mb-2 font-semibold">
+      <div className="flex items-center space-x-2 text-cyan-300 text-xs font-sans normal-case tracking-normal mb-2 font-semibold">
         <Sigma className="w-4 h-4 text-[#00F0FF]" />
         <span>{title}</span>
       </div>

@@ -89,10 +89,10 @@ export const WelcomeScreen = ({ onStartLab }) => {
         {/* Title */}
         <div className="space-y-2.5">
           <div className="inline-block relative">
-            <h1 className="font-['Press_Start_2P'] text-2xl sm:text-3xl md:text-4xl text-white tracking-wide leading-snug">
+            <h1 className="font-sans text-2xl sm:text-3xl md:text-4xl text-white tracking-normal leading-snug">
               CLUSTER<span className="text-[#00F0FF]">LAB</span>
             </h1>
-            <div className="font-['Silkscreen'] text-xs sm:text-sm text-cyan-300 uppercase tracking-wider mt-1.5 font-semibold">
+            <div className="font-sans text-xs sm:text-sm text-cyan-300 normal-case tracking-normal mt-1.5 font-semibold">
               Interactive Unsupervised Machine Learning Laboratory
             </div>
           </div>
@@ -135,7 +135,7 @@ export const WelcomeScreen = ({ onStartLab }) => {
         </div>
 
         {/* Five Stages Footnote */}
-        <div className="font-['Silkscreen'] text-[10px] text-gray-400 pt-1">
+        <div className="font-sans text-[10px] text-gray-400 pt-1">
           1. LEARN • 2. PREPARE DATA • 3. RUN EXPERIMENT • 4. ANALYZE RESULTS • 5. SAVE & REPORT
         </div>
       </div>
@@ -144,12 +144,12 @@ export const WelcomeScreen = ({ onStartLab }) => {
       <div className="space-y-3">
         <div className="flex items-center justify-between border-b border-[#1E1136] pb-2">
           <div className="flex items-center space-x-2">
-            <span className="font-['Press_Start_2P'] text-[10px] text-[#00F0FF]">01</span>
-            <h2 className="font-['Silkscreen'] text-sm sm:text-base font-bold text-white uppercase tracking-wider">
+            <span className="font-sans text-[10px] text-[#00F0FF]">01</span>
+            <h2 className="font-sans text-sm sm:text-base font-bold text-white normal-case tracking-normal">
               Three Clustering Paradigms
             </h2>
           </div>
-          <span className="text-[11px] text-gray-400 font-mono hidden sm:inline">
+          <span className="text-[11px] text-gray-400 font-sans hidden sm:inline">
             CENTROID • PROBABILISTIC • DENSITY-BASED
           </span>
         </div>
@@ -171,10 +171,10 @@ export const WelcomeScreen = ({ onStartLab }) => {
                 </div>
 
                 <div>
-                  <h3 className="font-['Press_Start_2P'] text-xs sm:text-sm text-white">
+                  <h3 className="font-sans text-xs sm:text-sm text-white">
                     {algo.name}
                   </h3>
-                  <div className="font-['Silkscreen'] text-xs text-gray-300 mt-0.5">
+                  <div className="font-sans text-xs text-gray-300 mt-0.5">
                     {algo.title}
                   </div>
                 </div>
@@ -184,7 +184,7 @@ export const WelcomeScreen = ({ onStartLab }) => {
                 </p>
               </div>
 
-              <div className="pt-2.5 border-t border-white/10 space-y-1 text-[11px] font-mono">
+              <div className="pt-2.5 border-t border-white/10 space-y-1 text-[11px] font-sans">
                 <div className="text-emerald-400">{algo.perk}</div>
                 <div className="text-amber-400">{algo.weakness}</div>
               </div>
@@ -197,8 +197,8 @@ export const WelcomeScreen = ({ onStartLab }) => {
       <div className="space-y-3">
         <div className="flex items-center justify-between border-b border-[#1E1136] pb-2">
           <div className="flex items-center space-x-2">
-            <span className="font-['Press_Start_2P'] text-[10px] text-[#00F0FF]">02</span>
-            <h2 className="font-['Silkscreen'] text-sm sm:text-base font-bold text-white uppercase tracking-wider">
+            <span className="font-sans text-[10px] text-[#00F0FF]">02</span>
+            <h2 className="font-sans text-sm sm:text-base font-bold text-white normal-case tracking-normal">
               Five-Stage Laboratory Workflow
             </h2>
           </div>
@@ -219,12 +219,12 @@ export const WelcomeScreen = ({ onStartLab }) => {
               className="text-left p-2.5 border border-[#20133A] bg-[#0E091C] hover:border-[#00F0FF]/70 hover:bg-[#130E26] transition-all group shadow-sm"
             >
               <div className="flex items-center justify-between mb-1">
-                <span className="font-['Press_Start_2P'] text-[8px] text-[#00F0FF] group-hover:text-yellow-400">
+                <span className="font-sans text-[8px] text-[#00F0FF] group-hover:text-yellow-400">
                   STEP {lvl.num}
                 </span>
                 <span className="text-[10px] text-gray-500 group-hover:text-cyan-300">▶</span>
               </div>
-              <div className="font-['Silkscreen'] text-xs font-bold text-gray-200 group-hover:text-white leading-tight">
+              <div className="font-sans text-xs font-bold text-gray-200 group-hover:text-white leading-tight">
                 {lvl.title}
               </div>
               <div className="text-[10px] text-gray-400 truncate mt-1">
@@ -238,20 +238,20 @@ export const WelcomeScreen = ({ onStartLab }) => {
       {/* Laboratory Technical Capabilities */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-center">
         <div className="p-3 border border-[#20133A] bg-[#0B0717] shadow-sm">
-          <div className="font-['Press_Start_2P'] text-[10px] sm:text-xs text-[#00F0FF]">3 ALGORITHMS</div>
-          <div className="text-[10px] text-gray-400 mt-1 font-mono">K-Means • EM/GMM • DBSCAN</div>
+          <div className="font-sans text-[10px] sm:text-xs text-[#00F0FF]">3 ALGORITHMS</div>
+          <div className="text-[10px] text-gray-400 mt-1 font-sans">K-Means • EM/GMM • DBSCAN</div>
         </div>
         <div className="p-3 border border-[#20133A] bg-[#0B0717] shadow-sm">
-          <div className="font-['Press_Start_2P'] text-[10px] sm:text-xs text-[#39FF14]">6 DATASETS</div>
-          <div className="text-[10px] text-gray-400 mt-1 font-mono">Real & Synthetic Manifolds</div>
+          <div className="font-sans text-[10px] sm:text-xs text-[#39FF14]">6 DATASETS</div>
+          <div className="text-[10px] text-gray-400 mt-1 font-sans">Real & Synthetic Manifolds</div>
         </div>
         <div className="p-3 border border-[#20133A] bg-[#0B0717] shadow-sm">
-          <div className="font-['Press_Start_2P'] text-[10px] sm:text-xs text-[#FF2E93]">STEP SIMULATION</div>
-          <div className="text-[10px] text-gray-400 mt-1 font-mono">Lloyd & EM Step Playback</div>
+          <div className="font-sans text-[10px] sm:text-xs text-[#FF2E93]">STEP SIMULATION</div>
+          <div className="text-[10px] text-gray-400 mt-1 font-sans">Lloyd & EM Step Playback</div>
         </div>
         <div className="p-3 border border-[#20133A] bg-[#0B0717] shadow-sm">
-          <div className="font-['Press_Start_2P'] text-[10px] sm:text-xs text-yellow-400">EVALUATION</div>
-          <div className="text-[10px] text-gray-400 mt-1 font-mono">Silhouette, DB & CH Metrics</div>
+          <div className="font-sans text-[10px] sm:text-xs text-yellow-400">EVALUATION</div>
+          <div className="text-[10px] text-gray-400 mt-1 font-sans">Silhouette, DB & CH Metrics</div>
         </div>
       </div>
     </div>

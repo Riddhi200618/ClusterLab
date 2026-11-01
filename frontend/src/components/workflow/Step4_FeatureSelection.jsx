@@ -51,13 +51,13 @@ export const Step4_FeatureSelection = () => {
             </div>
             <div>
               <div className="flex items-center space-x-2">
-                <span className="font-['Press_Start_2P'] text-[10px] text-[#00F0FF]">STAGE 2</span>
-                <h1 className="font-['Silkscreen'] text-base sm:text-lg font-bold text-white uppercase tracking-wider">
+                <span className="font-sans text-[10px] text-[#00F0FF]">STAGE 2</span>
+                <h1 className="font-sans text-base sm:text-lg font-bold text-white normal-case tracking-normal">
                   Feature Selection & Normalization
                 </h1>
               </div>
               <p className="text-xs text-gray-300 mt-0.5 font-sans">
-                Select feature dimensions and apply mathematical normalization to standardize feature scale across dimensions.
+                Choose the features and how to scale their values.
               </p>
             </div>
           </div>
@@ -72,10 +72,10 @@ export const Step4_FeatureSelection = () => {
         {/* Left: Feature Selection Checkboxes */}
         <div className="border border-[#20133A] bg-[#0E091C] p-4 sm:p-5 shadow-sm space-y-4">
           <div className="flex items-center justify-between pb-2.5 border-b border-[#1E1136]">
-            <h3 className="font-['Silkscreen'] text-xs font-bold text-white uppercase tracking-wider">
+            <h3 className="font-sans text-xs font-bold text-white normal-case tracking-normal">
               1. Select Feature Dimensions (Min 2)
             </h3>
-            <span className="font-mono text-xs text-[#00F0FF]">
+            <span className="font-sans text-xs text-[#00F0FF]">
               {selectedFeatures.length} SELECTED
             </span>
           </div>
@@ -97,11 +97,11 @@ export const Step4_FeatureSelection = () => {
                       : 'border-[#20133A] bg-[#0A0617] text-gray-400 hover:border-[#3A2269]'
                   }`}
                 >
-                  <span className="text-xs font-['Silkscreen'] font-bold capitalize">
+                  <span className="text-xs font-sans font-bold capitalize">
                     {fName.replace('_', ' ')}
                   </span>
                   <div
-                    className={`w-4 h-4 border flex items-center justify-center font-mono text-[10px] ${
+                    className={`w-4 h-4 border flex items-center justify-center font-sans text-[10px] ${
                       isChecked
                         ? 'border-[#00F0FF] bg-[#00F0FF] text-[#050510] font-bold'
                         : 'border-[#3D256B] bg-transparent text-transparent'
@@ -118,8 +118,8 @@ export const Step4_FeatureSelection = () => {
         {/* Right: Scaling Method Radio Cards */}
         <div className="border border-[#20133A] bg-[#0E091C] p-4 sm:p-5 shadow-sm space-y-4">
           <div className="flex items-center justify-between pb-2.5 border-b border-[#1E1136]">
-            <h3 className="font-['Silkscreen'] text-xs font-bold text-white uppercase tracking-wider">
-              2. Normalization Protocol
+            <h3 className="font-sans text-xs font-bold text-white normal-case tracking-normal">
+              2. Feature Scaling
             </h3>
           </div>
 
@@ -129,19 +129,19 @@ export const Step4_FeatureSelection = () => {
                 id: 'standard',
                 name: 'StandardScaler (Z-Score)',
                 formula: 'z = (x - μ) / σ',
-                desc: 'Centers around 0 with unit variance. Recommended for Gaussian algorithms (K-Means & EM).',
+                desc: 'Sets each feature to mean 0 and standard deviation 1.',
               },
               {
                 id: 'minmax',
                 name: 'MinMaxScaler',
                 formula: 'x_scaled = (x - min) / (max - min)',
-                desc: 'Transforms all feature coordinates strictly into the [0, 1] range.',
+                desc: 'Scales each feature to the range 0 to 1.',
               },
               {
                 id: 'none',
                 name: 'No Scaling (Raw Coordinates)',
                 formula: 'x_scaled = x',
-                desc: 'Uses raw units. High-magnitude features will disproportionately dominate Euclidean distance.',
+                desc: 'Keeps original values. Features with larger values can dominate distances.',
               },
             ].map((sc) => {
               const isSelected = scalingMethod === sc.id;
@@ -156,8 +156,8 @@ export const Step4_FeatureSelection = () => {
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-['Silkscreen'] text-xs font-bold text-white">{sc.name}</span>
-                    <span className="font-mono text-[10px] text-[#39FF14] bg-black/40 px-2 py-0.5 border border-emerald-900/60">
+                    <span className="font-sans text-xs font-bold text-white">{sc.name}</span>
+                    <span className="font-sans text-[10px] text-[#39FF14] bg-black/40 px-2 py-0.5 border border-emerald-900/60">
                       {sc.formula}
                     </span>
                   </div>

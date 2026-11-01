@@ -34,14 +34,14 @@ export const Step10_AlgorithmComparison = () => {
           </div>
           <div>
             <div className="flex items-center space-x-2">
-              <span className="font-['Press_Start_2P'] text-[10px] text-yellow-400">STAGE 4</span>
-              <h1 className="font-['Silkscreen'] text-base sm:text-lg font-bold text-white uppercase tracking-wider">
+              <span className="font-sans text-[10px] text-yellow-400">STAGE 4</span>
+              <h1 className="font-sans text-base sm:text-lg font-bold text-white normal-case tracking-normal">
                 Algorithm Comparison
               </h1>
             </div>
             <p className="text-xs text-gray-300 mt-0.5 font-sans">
-              Side-by-side benchmark comparison of K-Means, EM/GMM, and DBSCAN on identical feature inputs and scaling.
-            </p>
+                Compare the three algorithms on the same data.
+              </p>
           </div>
         </div>
 
@@ -53,7 +53,7 @@ export const Step10_AlgorithmComparison = () => {
             disabled={loading}
             icon={<RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />}
           >
-            {loading ? 'COMPARING...' : 'RE-RUN BENCHMARK'}
+            {loading ? 'COMPARING...' : 'COMPARE AGAIN'}
           </PixelButton>
 
           <PixelBadge variant="yellow">
@@ -72,11 +72,11 @@ export const Step10_AlgorithmComparison = () => {
       ) : (
         <div className="border border-[#20133A] bg-[#0E091C] p-8 sm:p-10 text-center text-gray-400 shadow-sm space-y-3">
           <RefreshCw className="w-7 h-7 mx-auto text-[#00F0FF] animate-spin" />
-          <p className="font-['Silkscreen'] text-sm font-bold text-gray-200">
+          <p className="font-sans text-sm font-bold text-gray-200">
             {loading ? 'EXECUTING K-MEANS, EM, AND DBSCAN IN PARALLEL...' : 'COMPARISON PENDING EXECUTION'}
           </p>
           <p className="text-xs text-gray-400 font-sans">
-            Standardizing metrics, computing Silhouette coefficients, and identifying optimal model.
+            Run all three algorithms to compare their scores and plots.
           </p>
           {!loading && (
             <div className="pt-2">
@@ -85,7 +85,7 @@ export const Step10_AlgorithmComparison = () => {
                 size="md"
                 onClick={runComparison}
               >
-                RUN BENCHMARK NOW
+                RUN COMPARISON
               </PixelButton>
             </div>
           )}
